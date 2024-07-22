@@ -1,0 +1,171 @@
+{
+  "main": {
+    "id": "365991bd15c29959",
+    "type": "split",
+    "children": [
+      {
+        "id": "92875eef2ffb7b89",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "48c8eaa166d28789",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ideas/plan.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "71fb7612ef31523b",
+    "type": "split",
+    "children": [
+      {
+        "id": "14e4ed9867ccdd91",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "773562e81e5bfff5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "d5263d26406c6a3d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "47307110f8df9d46",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8f70b5209cd1f520",
+    "type": "split",
+    "children": [
+      {
+        "id": "216833753a7fe815",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6f64f5cf09fcbde8",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Ideas/plan.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "94c9c9766433b32a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Ideas/plan.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "28d13dc7d77589b6",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "f67d8e9dd00d57f8",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Ideas/plan.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "773562e81e5bfff5",
+  "lastOpenFiles": [
+    "Journals/2024-07-21.md",
+    "Journals/2024-07-11.md",
+    "Journals/2024-06-08.md",
+    "Journals",
+    "Journals/2024-07-11.md",
+    "Ideas/plan.md",
+    "letters/letters.md",
+    "Self/hair alg.md",
+    "Journals",
+    "Self",
+    "Journals/2024-06-08.md",
+    "Ideas",
+    "Journals/2024-07-21.md",
+    "navia/austenite.md",
+    "letters",
+    "letters/doc.md",
+    "letters/danny.md",
+    "Ideas/austen knight.md",
+    "letters/adaptation-2.pdf"
+  ]
+}
