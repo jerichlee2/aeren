@@ -11,8 +11,12 @@
             "id": "60d2b1c16489ef44",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "aeren.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "aeren.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "aeren.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "aeren.md"
+              }
             }
           }
         ]
@@ -141,6 +149,10 @@
   "active": "60d2b1c16489ef44",
   "lastOpenFiles": [
     "food.py",
+    "test_tkinter.py",
+    "aeren.md",
+    "food2.py",
+    "calc.ipynb",
     "food8.py",
     "food7.py",
     "food6.py",
@@ -148,9 +160,6 @@
     "food4.py",
     "food3.py",
     "__pycache__/food.cpython-312.pyc",
-    "__pycache__",
-    "food2.py",
-    "diet_aeren_test.csv",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/logo2.png",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/grace_hopper.jpg",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/Minduka_Present_Blue_Pack.png",
@@ -184,7 +193,6 @@
     "markdown_stuff/Ideas/plan.md",
     "markdown_stuff/Ideas/austen knight.md",
     "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/ziptestdata/README.md",
-    "Ideas/things i want to track.md",
-    "Ideas/wishlist.md"
+    "Ideas/things i want to track.md"
   ]
 }

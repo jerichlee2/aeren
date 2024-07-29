@@ -14,9 +14,13 @@ carb_goal = default_carb_goal
 protein_goal = default_protein_goal
 fat_goal = default_fat_goal
 
-def create_pie_charts(data, carb_goal, protein_goal, fat_goal, root):
+def create_pie_charts(data, carb_goal, protein_goal, fat_goal, plot_frame):
     daily_totals = data.groupby('Date')[['Carbs (g)', 'Protein (g)', 'Fat (g)']].sum().reset_index()
-    
+
+    # Clear the existing canvas if it exists
+    for widget in plot_frame.winfo_children():
+        widget.destroy()
+
     for index, row in daily_totals.iterrows():
         date = row['Date']
         total_carbs = row['Carbs (g)']
@@ -107,15 +111,16 @@ def create_pie_charts(data, carb_goal, protein_goal, fat_goal, root):
             ax.axis('equal')
 
         plt.suptitle(f"Macronutrient Consumption for {date}")
-        
-        # Clear the existing canvas if it exists
-        for widget in root.winfo_children():
-            if isinstance(widget, FigureCanvasTkAgg):
-                widget.get_tk_widget().destroy()
-        
-        canvas = FigureCanvasTkAgg(fig, master=root)
-        canvas.draw()
-        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+    
+    canvas = FigureCanvasTkAgg(fig, master=plot_frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
+def refresh_plot():
+    global carb_goal, protein_goal, fat_goal
+    print(f"Refreshing plot with goals - Carbs: {carb_goal}, Proteins: {protein_goal}, Fats: {fat_goal}")
+    data = pd.read_csv('diet_aeren_test.csv')
+    create_pie_charts(data, carb_goal, protein_goal, fat_goal, plot_frame)
 
 def open_settings():
     settings_window = tk.Toplevel(root)
@@ -144,9 +149,6 @@ def open_settings():
         settings_window.destroy()
         # Update the goals display
         current_goals_label.config(text=f"Carbs: {carb_goal}g, Proteins: {protein_goal}g, Fats: {fat_goal}g")
-        # Recreate the pie charts with the new goals
-        data = pd.read_csv('diet_aeren_test.csv')
-        create_pie_charts(data, carb_goal, protein_goal, fat_goal, plot_frame)
 
     save_button = ttk.Button(settings_window, text="Save", command=save_settings)
     save_button.pack()
@@ -164,6 +166,9 @@ current_goals_label.pack()
 
 settings_button = ttk.Button(frame, text="Settings", command=open_settings)
 settings_button.pack()
+
+refresh_button = ttk.Button(frame, text="Refresh", command=refresh_plot)
+refresh_button.pack()
 
 plot_frame = ttk.Frame(root, padding="10")
 plot_frame.pack(fill=tk.BOTH, expand=True)
