@@ -1,1 +1,0 @@
-Hey Danny, I'm sorry for missing your call. I've been quite busy this summer--internship, school, other activities of all sorts. I'll try and give you a call sometime this weekend if that's good with you. I hope you've been doing well Danny, and I look forward to catching up soon.

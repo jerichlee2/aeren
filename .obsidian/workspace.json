@@ -8,15 +8,11 @@
         "type": "tabs",
         "children": [
           {
-            "id": "48c8eaa166d28789",
+            "id": "60d2b1c16489ef44",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Ideas/plan.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Ideas/plan.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Ideas/plan.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Ideas/plan.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,26 +138,49 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "773562e81e5bfff5",
+  "active": "60d2b1c16489ef44",
   "lastOpenFiles": [
-    "Journals/2024-07-21.md",
-    "Journals/2024-07-11.md",
-    "Journals/2024-06-08.md",
-    "Journals",
-    "Journals/2024-07-11.md",
+    "lifting/Lifting Plan.md",
+    "markdown_stuff/lifting/Lifting Plan.md",
+    "markdown_stuff/lifting",
+    "school/school plan.md",
+    "markdown_stuff/school/school plan.md",
+    "markdown_stuff/school",
+    "markdown_stuff/Self/hair alg.md",
+    "markdown_stuff/Self",
+    "markdown_stuff/Letters/reinah.md",
+    "markdown_stuff/Letters/matt_smith.md",
+    "markdown_stuff/Letters/letters.md",
+    "markdown_stuff/Letters/john_tsohas.md",
+    "markdown_stuff/Letters/grandpa_response.md",
+    "markdown_stuff/Letters/grandpa_7_7_24.md",
+    "markdown_stuff/Letters/grandpa.md",
+    "markdown_stuff/Letters/danny.md",
+    "markdown_stuff/Letters/doc.md",
+    "markdown_stuff/Letters/adaptation-2.pdf",
+    "markdown_stuff/Letters",
+    "markdown_stuff/Journals/2024-07-21.md",
+    "markdown_stuff/Journals/2024-07-11.md",
+    "markdown_stuff/Journals/2024-06-08.md",
+    "markdown_stuff/Journals",
+    "markdown_stuff/Ideas/wishlist.md",
+    "markdown_stuff/Ideas/things i want to track.md",
+    "markdown_stuff/Ideas/plan.md",
+    "markdown_stuff/Ideas/austen knight.md",
+    "markdown_stuff/Ideas",
+    "markdown_stuff",
+    "untitled folder",
+    "aeren.xlsx",
+    "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/imghdrdata/python.webp",
+    "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/imghdrdata/python.png",
+    "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/imghdrdata/python.jpg",
+    "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/imghdrdata/python.gif",
+    "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/imghdrdata/python.bmp",
+    "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/imghdrdata/python-raw.jpg",
+    "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/ziptestdata/README.md",
+    "Ideas/things i want to track.md",
+    "Ideas/wishlist.md",
     "Ideas/plan.md",
-    "letters/letters.md",
-    "Self/hair alg.md",
-    "Journals",
-    "Self",
-    "Journals/2024-06-08.md",
-    "Ideas",
-    "Journals/2024-07-21.md",
-    "navia/austenite.md",
-    "letters",
-    "letters/doc.md",
-    "letters/danny.md",
-    "Ideas/austen knight.md",
-    "letters/adaptation-2.pdf"
+    "Journals/2024-07-21.md"
   ]
 }
