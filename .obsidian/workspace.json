@@ -11,15 +11,24 @@
             "id": "60d2b1c16489ef44",
             "type": "leaf",
             "state": {
+              "type": "graph",
+              "state": {}
+            }
+          },
+          {
+            "id": "591c41268c02296c",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "aeren.md",
+                "file": "aeren/aeren.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "aeren.md",
+                "file": "aeren/aeren.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "aeren.md",
+                "file": "aeren/aeren.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "aeren.md"
+                "file": "aeren/aeren.md"
               }
             }
           }
@@ -146,20 +155,44 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "60d2b1c16489ef44",
+  "active": "773562e81e5bfff5",
   "lastOpenFiles": [
+    "aeren/social/social.md",
+    "aeren/social/style.md",
+    "aeren/social/style",
+    "aeren/learning/mechanics.md",
+    "aeren/learning/learning.md",
+    "aeren/aeren.md",
+    "aeren/health/health.md",
+    "aeren/books/books.md",
+    "aeren/books/literature.md",
+    "aeren/career/career.md",
+    "aeren/music/music.md",
+    "aeren",
+    "aeren/learning/compe.md",
+    "aeren/learning/pure-math.md",
+    "aeren/health/lifting.md",
+    "aeren/health/push.md",
+    "health/health.md",
+    "social/social.md",
+    "aeren/books",
+    "aeren/music",
+    "aeren/career",
+    "aeren/learning",
+    "aeren/social",
+    "aeren/health",
+    "aeren/mantra.md",
+    "aeren/learning/pure math.md",
+    "aeren/learning/ai.md",
+    "aeren/music/albums.md",
+    "aeren/music/guitar.md",
+    "aeren/social/linkedin.md",
+    "aeren/social/x.md",
+    "aeren/social/threads.md",
+    "aeren/social/ig.md",
+    "aeren/health/diet.md",
     "food.py",
     "test_tkinter.py",
-    "aeren.md",
-    "food2.py",
-    "calc.ipynb",
-    "food8.py",
-    "food7.py",
-    "food6.py",
-    "food5.py",
-    "food4.py",
-    "food3.py",
-    "__pycache__/food.cpython-312.pyc",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/logo2.png",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/grace_hopper.jpg",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/Minduka_Present_Blue_Pack.png",
@@ -169,30 +202,6 @@
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/images/zoom_to_rect-symbolic.svg",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/images/subplots_large.png",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/images/subplots.svg",
-    "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/images/subplots.png",
-    "myenv/lib/python3.12/site-packages/numpy/random/LICENSE.md",
-    "lifting/Lifting Plan.md",
-    "markdown_stuff/lifting/Lifting Plan.md",
-    "school/school plan.md",
-    "markdown_stuff/school/school plan.md",
-    "markdown_stuff/Self/hair alg.md",
-    "markdown_stuff/Letters/reinah.md",
-    "markdown_stuff/Letters/matt_smith.md",
-    "markdown_stuff/Letters/letters.md",
-    "markdown_stuff/Letters/john_tsohas.md",
-    "markdown_stuff/Letters/grandpa_response.md",
-    "markdown_stuff/Letters/grandpa_7_7_24.md",
-    "markdown_stuff/Letters/grandpa.md",
-    "markdown_stuff/Letters/danny.md",
-    "markdown_stuff/Letters/doc.md",
-    "markdown_stuff/Journals/2024-07-21.md",
-    "markdown_stuff/Journals/2024-07-11.md",
-    "markdown_stuff/Journals/2024-06-08.md",
-    "markdown_stuff/Ideas/wishlist.md",
-    "markdown_stuff/Ideas/things i want to track.md",
-    "markdown_stuff/Ideas/plan.md",
-    "markdown_stuff/Ideas/austen knight.md",
-    "build/bdist.macosx-10.9-universal2/python3.12-standalone/app/collect/test/ziptestdata/README.md",
-    "Ideas/things i want to track.md"
+    "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/images/subplots.png"
   ]
 }
