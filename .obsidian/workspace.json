@@ -21,7 +21,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "aeren/aeren.md",
+                "file": "aeren-main.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "aeren/aeren.md",
+                "file": "aeren-main.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "aeren/aeren.md",
+                "file": "aeren-main.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "aeren/aeren.md"
+                "file": "aeren-main.md"
               }
             }
           }
@@ -155,11 +155,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "773562e81e5bfff5",
+  "active": "591c41268c02296c",
   "lastOpenFiles": [
+    "diet.sh",
+    "csv/diet.csv",
+    "food.py",
+    "food8.py",
+    "food7.py",
+    "food6.py",
+    "food5.py",
+    "food4.py",
+    "csv/updated_cleaned_diet.csv",
+    "csv/cleaned_diet.csv",
+    "weekly_diet_analysis_normalized.csv",
+    "aeren-main.md",
     "aeren/social/social.md",
     "aeren/social/style.md",
-    "aeren/social/style",
     "aeren/learning/mechanics.md",
     "aeren/learning/learning.md",
     "aeren/aeren.md",
@@ -168,19 +179,12 @@
     "aeren/books/literature.md",
     "aeren/career/career.md",
     "aeren/music/music.md",
-    "aeren",
     "aeren/learning/compe.md",
     "aeren/learning/pure-math.md",
     "aeren/health/lifting.md",
     "aeren/health/push.md",
     "health/health.md",
     "social/social.md",
-    "aeren/books",
-    "aeren/music",
-    "aeren/career",
-    "aeren/learning",
-    "aeren/social",
-    "aeren/health",
     "aeren/mantra.md",
     "aeren/learning/pure math.md",
     "aeren/learning/ai.md",
@@ -189,10 +193,6 @@
     "aeren/social/linkedin.md",
     "aeren/social/x.md",
     "aeren/social/threads.md",
-    "aeren/social/ig.md",
-    "aeren/health/diet.md",
-    "food.py",
-    "test_tkinter.py",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/logo2.png",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/grace_hopper.jpg",
     "myenv/lib/python3.12/site-packages/matplotlib/mpl-data/sample_data/Minduka_Present_Blue_Pack.png",

@@ -1,0 +1,13 @@
+- aeren
+	- quote
+	- picture
+	- book
+	- wishlist
+	- fitness
+		- lifting
+		- cardio
+	- schedule
+	- reminders
+		- social media reminder
+		- grocery reminder
+		- birthday reminder
