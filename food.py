@@ -78,7 +78,7 @@ def load_and_plot(file_path):
 
 # Create the main window
 root = tk.Tk()
-root.title("Diet Data Plotter")
+root.title("Food")
 
 # Load and plot the data from the specified file path
 load_and_plot(file_path)

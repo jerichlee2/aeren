@@ -27,7 +27,7 @@ def str_to_time(time_str):
 
 # Initialize the tkinter window
 root = tk.Tk()
-root.title(f"Today's Schedule: {today_day}")
+root.title("Schedule")
 
 # Create a treeview to display the schedule
 tree = ttk.Treeview(root, columns=('Time', 'Schedule'), show='headings')
@@ -52,15 +52,11 @@ for index, row in today_schedule.iterrows():
         tags = ()
 
         # Check if current time is within the time range of the current row
-        if start_time and (start_time <= current_time and (end_time is None or current_time < end_time)):
+        if start_time and (start_time <= current_time < (end_time or (datetime.combine(datetime.today(), start_time) + pd.Timedelta(minutes=30)).time())):
             tags = ('current_time',)
             highlighted = True
 
         tree.insert("", "end", values=(row['Time'], schedule), tags=tags)
-
-# If no cell was highlighted, highlight the last row
-if not highlighted and len(today_schedule) > 0:
-    tree.item(tree.get_children()[-1], tags=('current_time',))
 
 # Highlight the cell for the current time
 tree.tag_configure('current_time', background='yellow')

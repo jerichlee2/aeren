@@ -1,41 +1,33 @@
 ﻿Time,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
-5:00,wake,wake,wake,wake,wake,wake,wake
-5:30,work,work,work,work,work,work,work
-6:00,work,work,work,work,work,work,work
-6:30,work,work,work,work,work,work,work
-7:00,work,work,work,work,work,work,work
-7:30,work,work,work,work,work,work,work
+7:30,wake,wake,wake,wake,wake,wake,wake
 8:00,work,work,work,work,work,work,work
 8:30,work,work,work,work,work,work,work
 9:00,work,work,work,work,work,work,work
-9:30,eat,eat,eat,eat,eat,eat,eat
-10:00,work,work,work,work,work,work,weekly analysis
-10:30,work,work,work,work,work,work,weekly analysis
-11:00,work,work,work,work,work,work,weekly analysis
-11:30,work,work,work,work,work,work,weekly analysis
-12:00,work,work,work,work,work,work,weekly analysis
+9:30,work,work,work,work,work,work,work
+10:00,work,work,work,work,work,work,work
+10:30,work,work,work,work,work,work,work
+11:00,work,work,work,work,work,work,work
+11:30,work,work,work,work,work,work,work
+12:00,eat,eat,eat,eat,eat,eat,eat
 12:30,work,work,work,work,work,work,weekly analysis
 13:00,work,work,work,work,work,work,weekly analysis
 13:30,work,work,work,work,work,work,weekly analysis
-14:00,social media,lift,lift,lift,lift,lift,lift
-14:30,social media,lift,lift,lift,lift,lift,lift
-15:00,social media,lift,lift,lift,lift,lift,lift
-15:30,social media,lift,lift,lift,lift,lift,lift
-16:00,groceries,lift,lift,lift,lift,lift,lift
-16:30,groceries,lift,lift,lift,lift,lift,lift
-17:00,eat,eat,eat,eat,eat,eat,eat
-17:30,read,read,read,read,read,read,read
-18:00,read,read,read,read,read,read,read
-18:30,read,read,read,read,read,read,read
+14:00,work,work,work,work,work,work,weekly analysis
+14:30,work,work,work,work,work,work,weekly analysis
+15:00,work,work,work,work,work,work,weekly analysis
+15:30,work,work,work,work,work,work,weekly analysis
+16:00,work,work,work,work,work,work,weekly analysis
+16:30,social media,lift,lift,lift,lift,lift,lift
+17:00,social media,lift,lift,lift,lift,lift,lift
+17:30,groceries,lift,lift,lift,lift,lift,lift
+18:00,groceries,lift,lift,lift,lift,lift,lift
+18:30,eat,eat,eat,eat,eat,eat,eat
 19:00,read,read,read,read,read,read,read
 19:30,read,read,read,read,read,read,read
 20:00,read,read,read,read,read,read,read
-20:30,sleep,sleep,sleep,sleep,sleep,sleep,sleep
-21:30,sleep,sleep,sleep,sleep,sleep,sleep,sleep
-22:30,sleep,sleep,sleep,sleep,sleep,sleep,sleep
+20:30,read,read,read,read,read,read,read
+21:00,read,read,read,read,read,read,read
+21:30,read,read,read,read,read,read,read
+22:00,read,read,read,read,read,read,read
+22:30,read,read,read,read,read,read,read
 23:30,sleep,sleep,sleep,sleep,sleep,sleep,sleep
-0:30,sleep,sleep,sleep,sleep,sleep,sleep,sleep
-1:30,sleep,sleep,sleep,sleep,sleep,sleep,sleep
-2:30,sleep,sleep,sleep,sleep,sleep,sleep,sleep
-3:30,sleep,sleep,sleep,sleep,sleep,sleep,sleep
-,,,,,,,
