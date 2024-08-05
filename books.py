@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from tkinter import Tk, Label
+from tkinter import Tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 def load_csv(file_path):
@@ -34,6 +34,7 @@ def plot_deep_work(daily_work, root):
     plt.xticks(rotation=90)
     plt.xticks(fontsize=5)  # X-axis tick labels font size
     plt.yticks(fontsize=5)  # Y-axis tick labels font size
+    ax.set_ylim(0, 12)  # Set y-axis limits from 0 to 12
 
     plt.tight_layout()
 
