@@ -1,0 +1,21 @@
+{
+    "description": "enter deepwork start",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "p",
+                "modifiers": {
+                    "mandatory": [
+                        "control"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "shell_command": "nohup /usr/local/bin/enter_deepwork_start.command > /dev/null 2>&1 &"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

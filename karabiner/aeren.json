@@ -1,0 +1,21 @@
+{
+    "description": "aeren",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "p",
+                "modifiers": {
+                    "mandatory": [
+                        "option"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "shell_command": "osascript /Users/jerichlee/Documents/aeren/aeren.scpt"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

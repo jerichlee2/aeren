@@ -1,0 +1,21 @@
+{
+    "description": "Launch a new Terminal window with F4 (replace macOS default Spotlight)",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "f4",
+                "modifiers": {
+                    "optional": [
+                        "caps_lock"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "shell_command": "open -a Terminal ~"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

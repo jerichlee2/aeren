@@ -1,0 +1,21 @@
+{
+    "description": "enter deepwork end",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "o",
+                "modifiers": {
+                    "mandatory": [
+                        "control"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "shell_command": "nohup /usr/local/bin/enter_deepwork_end.command > /dev/null 2>&1 &"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

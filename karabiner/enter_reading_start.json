@@ -1,0 +1,21 @@
+{
+    "description": "enter reading start",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "i",
+                "modifiers": {
+                    "mandatory": [
+                        "control"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "shell_command": "nohup /usr/local/bin/enter_reading_start.command > /dev/null 2>&1 &"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

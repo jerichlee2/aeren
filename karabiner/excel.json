@@ -1,0 +1,21 @@
+{
+    "description": "excel",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "y",
+                "modifiers": {
+                    "mandatory": [
+                        "option"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "shell_command": "open -a 'Microsoft Excel'"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
