@@ -38,26 +38,26 @@ def load_and_plot(file_path):
     axes[0].plot(daily_calories, marker='o', linestyle='-', color='b')
     axes[0].set_title('Daily Caloric Intake', fontsize=10)
     axes[0].set_xlabel('')
-    axes[0].set_ylabel('Calories', fontsize=8)
-    axes[0].tick_params(axis='both', which='major', labelsize=8)
+    axes[0].set_ylabel('Calories', fontsize=4)
+    axes[0].tick_params(axis='both', which='major', labelsize=4)
     axes[0].set_xticks([])
 
     # Macronutrient Distribution
     daily_macros.plot(kind='bar', stacked=True, ax=axes[1], colormap='viridis')
     axes[1].set_title('Daily Macronutrient Distribution', fontsize=10)
     axes[1].set_xlabel('')
-    axes[1].set_ylabel('Grams', fontsize=8)
-    axes[1].legend(['Carbs (g)', 'Protein (g)', 'Fat (g)'], fontsize=8)
-    axes[1].tick_params(axis='both', which='major', labelsize=8)
+    axes[1].set_ylabel('Grams', fontsize=4)
+    axes[1].legend(['Carbs (g)', 'Protein (g)', 'Fat (g)'], fontsize=4)
+    axes[1].tick_params(axis='both', which='major', labelsize=4)
     axes[1].set_xticks([])
 
     # Meal Contributions to Daily Caloric Intake
     meal_contributions.plot(kind='bar', stacked=True, ax=axes[2], colormap='tab20')
     axes[2].set_title('Meal Contributions to Daily Caloric Intake', fontsize=10)
-    axes[2].set_xlabel('Date', fontsize=8)
-    axes[2].set_ylabel('Calories', fontsize=8)
-    axes[2].legend(title='Meal', fontsize=8)
-    axes[2].tick_params(axis='both', which='major', labelsize=8)
+    axes[2].set_xlabel('Date', fontsize=4)
+    axes[2].set_ylabel('Calories', fontsize=4)
+    axes[2].legend(title='Meal', fontsize=4)
+    axes[2].tick_params(axis='both', which='major', labelsize=4)
     axes[2].tick_params(axis='x', rotation=90)
     axes[2].set_xticklabels([date.strftime('%m/%d/%y') for date in meal_contributions.index], fontsize=6)
 
@@ -66,7 +66,7 @@ def load_and_plot(file_path):
                  f"Mean Carbs (g)/Day: {mean_carbs:.2f}\n" \
                  f"Mean Protein (g)/Day: {mean_protein:.2f}\n" \
                  f"Mean Fat (g)/Day: {mean_fat:.2f}"
-    axes[3].text(0.05, .3, stats_text, fontsize=8, verticalalignment='center')
+    axes[3].text(0.05, .3, stats_text, fontsize=4, verticalalignment='center')
     axes[3].axis('off')
 
     plt.tight_layout()
