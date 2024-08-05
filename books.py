@@ -27,11 +27,14 @@ def plot_deep_work(daily_work, root):
     # Plot the total duration of deep work sessions per day
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(daily_work['Date'], daily_work['Duration'], marker='o', linestyle='-')
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Total Duration (hours)')
-    ax.set_title('Total Reading Time Per Day')
+    ax.set_xlabel('Date', fontsize=5)
+    ax.set_ylabel('Total Duration (hours)', fontsize=5)
+    ax.set_title('Total Reading Time Per Day', fontsize=5)
     ax.grid(True)
-    plt.xticks(rotation=45)
+    plt.xticks(rotation=90)
+    plt.xticks(fontsize=5)  # X-axis tick labels font size
+    plt.yticks(fontsize=5)  # Y-axis tick labels font size
+
     plt.tight_layout()
 
     # Display the plot in the Tkinter window

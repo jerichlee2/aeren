@@ -32,11 +32,11 @@ def load_and_plot(file_path):
     mean_fat = daily_macros['Fat (g)'].mean()
 
     # Plotting
-    fig, axes = plt.subplots(4, 1, figsize=(10, 10))
+    fig, axes = plt.subplots(4, 1, figsize=(10, 5))
 
     # Daily Caloric Intake
     axes[0].plot(daily_calories, marker='o', linestyle='-', color='b')
-    axes[0].set_title('Daily Caloric Intake', fontsize=10)
+    axes[0].set_title('Daily Caloric Intake', fontsize=5)
     axes[0].set_xlabel('')
     axes[0].set_ylabel('Calories', fontsize=4)
     axes[0].tick_params(axis='both', which='major', labelsize=4)
@@ -44,22 +44,22 @@ def load_and_plot(file_path):
 
     # Macronutrient Distribution
     daily_macros.plot(kind='bar', stacked=True, ax=axes[1], colormap='viridis')
-    axes[1].set_title('Daily Macronutrient Distribution', fontsize=10)
+    axes[1].set_title('Daily Macronutrient Distribution', fontsize=5)
     axes[1].set_xlabel('')
     axes[1].set_ylabel('Grams', fontsize=4)
-    axes[1].legend(['Carbs (g)', 'Protein (g)', 'Fat (g)'], fontsize=4)
+    axes[1].legend(['Carbs (g)', 'Protein (g)', 'Fat (g)'],loc='right', fontsize=5)
     axes[1].tick_params(axis='both', which='major', labelsize=4)
     axes[1].set_xticks([])
 
     # Meal Contributions to Daily Caloric Intake
     meal_contributions.plot(kind='bar', stacked=True, ax=axes[2], colormap='tab20')
-    axes[2].set_title('Meal Contributions to Daily Caloric Intake', fontsize=10)
+    axes[2].set_title('Meal Contributions to Daily Caloric Intake', fontsize=5)
     axes[2].set_xlabel('Date', fontsize=4)
     axes[2].set_ylabel('Calories', fontsize=4)
-    axes[2].legend(title='Meal', fontsize=4)
+    axes[2].legend(loc='right',fontsize=4)
     axes[2].tick_params(axis='both', which='major', labelsize=4)
-    axes[2].tick_params(axis='x', rotation=90)
-    axes[2].set_xticklabels([date.strftime('%m/%d/%y') for date in meal_contributions.index], fontsize=6)
+    axes[2].tick_params(axis='x', rotation=0)
+    axes[2].set_xticklabels([date.strftime('%m/%d/%y') for date in meal_contributions.index], fontsize=3)
 
     # Display weekly statistics
     stats_text = f"Mean Calories/Day: {mean_calories:.2f}\n" \
