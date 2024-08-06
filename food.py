@@ -32,7 +32,7 @@ def load_and_plot(file_path):
     mean_fat = daily_macros['Fat (g)'].mean()
 
     # Plotting
-    fig, axes = plt.subplots(4, 1, figsize=(10, 5))
+    fig, axes = plt.subplots(3, 1, figsize=(10, 5))
 
     # Daily Caloric Intake
     axes[0].plot(daily_calories, marker='o', linestyle='-', color='b')
@@ -47,7 +47,7 @@ def load_and_plot(file_path):
     axes[1].set_title('Daily Macronutrient Distribution', fontsize=5)
     axes[1].set_xlabel('')
     axes[1].set_ylabel('Grams', fontsize=4)
-    axes[1].legend(['Carbs (g)', 'Protein (g)', 'Fat (g)'],loc='right', fontsize=5)
+    axes[1].legend(['Carbs (g)', 'Protein (g)', 'Fat (g)'], loc='right', fontsize=5)
     axes[1].tick_params(axis='both', which='major', labelsize=4)
     axes[1].set_xticks([])
 
@@ -56,18 +56,10 @@ def load_and_plot(file_path):
     axes[2].set_title('Meal Contributions to Daily Caloric Intake', fontsize=5)
     axes[2].set_xlabel('Date', fontsize=4)
     axes[2].set_ylabel('Calories', fontsize=4)
-    axes[2].legend(loc='right',fontsize=4)
+    axes[2].legend(loc='right', fontsize=4)
     axes[2].tick_params(axis='both', which='major', labelsize=4)
     axes[2].tick_params(axis='x', rotation=0)
     axes[2].set_xticklabels([date.strftime('%m/%d/%y') for date in meal_contributions.index], fontsize=3)
-
-    # Display weekly statistics
-    stats_text = f"Mean Calories/Day: {mean_calories:.2f}\n" \
-                 f"Mean Carbs (g)/Day: {mean_carbs:.2f}\n" \
-                 f"Mean Protein (g)/Day: {mean_protein:.2f}\n" \
-                 f"Mean Fat (g)/Day: {mean_fat:.2f}"
-    axes[3].text(0.05, .3, stats_text, fontsize=4, verticalalignment='center')
-    axes[3].axis('off')
 
     plt.tight_layout()
 
