@@ -4,9 +4,6 @@ import csv
 import os
 from datetime import datetime
 
-# Ensure the CSV directory exists
-if not os.path.exists('csv'):
-    os.makedirs('csv')
 
 # Function to read CSV and return list of rows
 def read_csv(file):
