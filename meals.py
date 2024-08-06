@@ -28,7 +28,7 @@ def write_csv(file, rows, mode='a'):
 
 # Function to search for name in csv/meals.csv
 def search_name(name):
-    meals = read_csv('csv/meals.csv')
+    meals = read_csv('/Users/jerichlee/Documents/aeren/csv/meals.csv')
     for row in meals:
         if row['Name'].lower() == name.lower():
             return row
@@ -36,14 +36,14 @@ def search_name(name):
 
 # Function to add meal to csv/meals.csv
 def add_meal(meal_data):
-    write_csv('csv/meals.csv', [meal_data], mode='a')
+    write_csv('/Users/jerichlee/Documents/aeren/csv/meals.csv', [meal_data], mode='a')
 
 # Function to append meal to csv/diet.csv with the current date
 def append_to_diet_log(meal_data):
     # Ensure only relevant fields are included
     meal_data_copy = {k: meal_data[k] for k in ['Meal', 'Name', 'Food Item', 'Calories', 'Carbs (g)', 'Protein (g)', 'Fat (g)']}
     meal_data_copy['Date Added'] = datetime.now().strftime('%Y-%m-%d')
-    write_csv('csv/diet.csv', [meal_data_copy], mode='a')
+    write_csv('/Users/jerichlee/Documents/aeren/csv/diet.csv', [meal_data_copy], mode='a')
     messagebox.showinfo("Success", f"{meal_data_copy['Name']} has been added to diet.csv.")
 
 # Function to handle user input
