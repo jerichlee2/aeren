@@ -10,9 +10,9 @@ def load_csv(file_path):
 
 def preprocess_data(df):
     # Convert the 'Date', 'Start Time', and 'End Time' columns to datetime
-    df['Date'] = pd.to_datetime(df['Date'])
-    df['Start Time'] = pd.to_datetime(df['Start Time'])
-    df['End Time'] = pd.to_datetime(df['End Time'])
+    df['Date'] = pd.to_datetime(df['Date'], infer_datetime_format=True)
+    df['Start Time'] = pd.to_datetime(df['Start Time'], infer_datetime_format=True)
+    df['End Time'] = pd.to_datetime(df['End Time'], infer_datetime_format=True)
 
     # Calculate the duration of each deep work session
     df['Duration'] = (df['End Time'] - df['Start Time']).dt.total_seconds() / 3600
@@ -20,6 +20,13 @@ def preprocess_data(df):
     # Aggregate the total duration per day
     daily_work = df.groupby(df['Date'].dt.date)['Duration'].sum().reset_index()
     daily_work['Date'] = pd.to_datetime(daily_work['Date'])
+
+    # Create a complete date range from the min to max date and include today
+    date_range = pd.date_range(start=daily_work['Date'].min(), end=pd.to_datetime('today'))
+
+    # Reindex the DataFrame to include the complete date range, filling missing dates with 0
+    daily_work = daily_work.set_index('Date').reindex(date_range, fill_value=0).reset_index()
+    daily_work.columns = ['Date', 'Duration']
 
     return daily_work
 
@@ -53,10 +60,6 @@ daily_work = preprocess_data(df)
 # Create the main window
 root = Tk()
 root.title("Deepwork")
-
-# # Add a label to provide instructions
-# instructions = Label(root, text="Deep Work Log Analysis")
-# instructions.pack(pady=10)
 
 # Plot the data
 plot_deep_work(daily_work, root)

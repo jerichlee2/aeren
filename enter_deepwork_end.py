@@ -1,6 +1,6 @@
 import csv
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 import tkinter as tk
 from tkinter import messagebox
 
@@ -28,17 +28,32 @@ def update_last_entry_in_csv(file_path, comments):
         return
     
     # Ensure the 'End Time' and 'Comments' columns are correct
-    if len(last_row) < 5:
-        last_row.extend([''] * (5 - len(last_row)))
+    if len(last_row) < 6:
+        last_row.extend([''] * (6 - len(last_row)))
     
     last_row[2] = current_time
     last_row[4] = comments
+    
+    # Calculate the total duration read, rounding to the nearest half hour
+    try:
+        start_time = datetime.strptime(last_row[1], '%I:%M %p')
+        end_time = datetime.strptime(last_row[2], '%I:%M %p')
+        # Handle PM to AM transition
+        if start_time > end_time:
+            end_time += timedelta(days=1)
+        duration = end_time - start_time
+        duration_hours = duration.total_seconds() / 3600
+        duration_rounded = round(duration_hours * 2) / 2  # Round to the nearest half hour
+        last_row[5] = duration_rounded
+    except Exception as e:
+        messagebox.showerror("Error", f"Error calculating duration: {e}")
+        return
     
     # Write the rows back to the CSV file
     with open(file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(rows)
-        
+
 def submit_entry(event=None):
     comments = entry_comments.get()
     if not comments:

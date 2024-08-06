@@ -5,7 +5,8 @@ aeren,option+p
 terminal,f4
 safari,option+u
 enter_deepwork_start,ctrl+q
-enter_deepwork_start,ctrl+p
+enter_deepwork_start,ctrl+0
 enter_reading_start,ctrl+i
 enter_reading_start,ctrl+w
 enter food,ctrl+o
+finder,option+0
