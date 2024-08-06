@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import ttk, messagebox
 import pandas as pd
 import os
 from datetime import datetime
@@ -7,11 +7,23 @@ from datetime import datetime
 class DietApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Diet Data Processor")
+        self.root.title("Aggregator")
         
         # Create a frame for the data display
         self.frame = tk.Frame(root)
-        self.frame.pack(pady=20)
+        self.frame.pack(pady=20, fill=tk.BOTH, expand=True)
+        
+        # Create a Treeview widget
+        self.tree = ttk.Treeview(self.frame, columns=("Stat", "Value"), show='headings')
+        self.tree.heading("Stat", text="Stat")
+        self.tree.heading("Value", text="Value")
+        self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        
+        # Add a vertical scrollbar
+        self.scrollbar = ttk.Scrollbar(self.frame, orient="vertical", command=self.tree.yview)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        self.tree.configure(yscrollcommand=self.scrollbar.set)
         
         # Process the CSV file upon initialization
         self.process_csv()
@@ -100,10 +112,9 @@ class DietApp:
         self.display_data(mean_data)
     
     def display_data(self, data):
-        # Display the data in the GUI
-        for idx, (stat, value) in enumerate(zip(data['Stat'], data['Value'])):
-            tk.Label(self.frame, text=stat).grid(row=idx, column=0, padx=10, pady=5)
-            tk.Label(self.frame, text=int(value) if value is not None else '').grid(row=idx, column=1, padx=10, pady=5)
+        # Display the data in the Treeview
+        for stat, value in zip(data['Stat'], data['Value']):
+            self.tree.insert("", tk.END, values=(stat, int(value) if value is not None else ''))
 
 if __name__ == "__main__":
     root = tk.Tk()
