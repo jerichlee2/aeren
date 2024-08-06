@@ -39,7 +39,7 @@ def add_meal(meal_data):
 def append_to_diet_log(meal_data):
     # Ensure only relevant fields are included
     meal_data_copy = {k: meal_data[k] for k in ['Meal', 'Name', 'Food Item', 'Calories', 'Carbs (g)', 'Protein (g)', 'Fat (g)']}
-    meal_data_copy['Date Added'] = datetime.now().strftime('%Y-%m-%d')
+    meal_data_copy['Date Added'] = datetime.now().strftime('%m/%d/%y')
     write_csv('/Users/jerichlee/Documents/aeren/csv/diet.csv', [meal_data_copy], mode='a')
     messagebox.showinfo("Success", f"{meal_data_copy['Name']} has been added to diet.csv.")
 
@@ -92,7 +92,7 @@ def add_new_meal(name):
     entry_meal.focus_set()  # Set focus to the first entry widget
     
     def save_new_meal(event=None):
-        date_added = datetime.now().strftime('%Y-%m-%d')
+        date_added = datetime.now().strftime('%m/%d/%y')
         meal_data = {
             'Meal': entry_meal.get(),
             'Name': entry_name.get(),
