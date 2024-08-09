@@ -1,11 +1,11 @@
-﻿Date,Start Time,End Time,Goals,Comments,Duration
-8/3/24,8:00 AM,12:00 PM,,,
-8/3/24,2:00 PM,7:00 PM,,,
-8/4/24,8:00 AM,12:00 PM,worked on aeren,,
-8/4/24,2:00 PM,7:00 PM,first pass completing micrograd--andrej karpathy,,
-8/5/24,8:00 AM,11:02 AM,worked on aeren,"got entry apps working! i want to learn how to control my streams of data to a desired output...what do i need to learn to understand this? control theory perhaps? I also want to balance learning from andej's ai series...so much to learn, so much to do, never enough time!",
-8/5/24,2:00 PM,6:00 PM,aeren,aeren…will implement fitbit features soon…,
-8/5/24,8:52 PM,10:30 PM,"working on karpathy's makemore lecture 1, or NNZTH lecture 2!",31:08 timestamp on makemore pt1,
-8/6/24,8:19 AM,11:17 AM,makemore continuation," 1:05:35 building makemore, learned about broadcasting tensors, establishing the negative log likelihood (log of the probabilities of each letter pair in a word times -1) as a loss function, and now I am going to build this model in the framework of a neural net...micrograd will come in handy for this, i'm assuming that we will build a MLP that will compute backprop wrt our loss (-log(likelihood)) for each weight in our MLP according to input bigrams",
-8/8/24,8:29 AM,10:00 AM,makemore part 1,,
-8/9/24,7:50 AM,11:00 AM,aeren,,
+﻿Date,Start Time,End Time,Goals,Comments
+8/3/24,8:00 AM,12:00 PM,,
+8/3/24,2:00 PM,7:00 PM,,
+8/4/24,8:00 AM,12:00 PM,worked on aeren,
+8/4/24,2:00 PM,7:00 PM,first pass completing micrograd--andrej karpathy,
+8/5/24,8:00 AM,11:02 AM,worked on aeren,"got entry apps working! i want to learn how to control my streams of data to a desired output...what do i need to learn to understand this? control theory perhaps? I also want to balance learning from andej's ai series...so much to learn, so much to do, never enough time!"
+8/5/24,2:00 PM,6:00 PM,aeren,aeren…will implement fitbit features soon…
+8/5/24,8:52 PM,10:30 PM,"working on karpathy's makemore lecture 1, or NNZTH lecture 2!",31:08 timestamp on makemore pt1
+8/6/24,8:19 AM,11:17 AM,makemore continuation," 1:05:35 building makemore, learned about broadcasting tensors, establishing the negative log likelihood (log of the probabilities of each letter pair in a word times -1) as a loss function, and now I am going to build this model in the framework of a neural net...micrograd will come in handy for this, i'm assuming that we will build a MLP that will compute backprop wrt our loss (-log(likelihood)) for each weight in our MLP according to input bigrams"
+8/8/24,8:29 AM,10:00 AM,makemore part 1,
+8/9/24,7:50 AM,11:00 AM,aeren,
