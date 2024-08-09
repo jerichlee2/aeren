@@ -21,8 +21,44 @@ def write_csv(file, rows, mode='a'):
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         if not file_exists or os.path.getsize(file) == 0:
             writer.writeheader()
-        writer.writerows(rows)
 
+        cleaned_rows = []
+        for row in rows:
+            cleaned_row = {key: value.strip() for key, value in row.items() if key in fieldnames and value.strip()}
+            cleaned_rows.append(cleaned_row)
+
+        writer.writerows(cleaned_rows)
+
+def append_to_diet_log(meal_data):
+    file = '/Users/jerichlee/Documents/aeren/csv/diet.csv'
+    
+    # Define the correct fieldnames
+    fieldnames = ['Meal', 'Name', 'Food Item', 'Calories', 'Carbs (g)', 'Protein (g)', 'Fat (g)', 'Date']
+    
+    # Ensure that meal_data contains all necessary fields, using an empty string for any missing fields
+    meal_data_copy = {field: meal_data.get(field, '') for field in fieldnames}
+    meal_data_copy['Date'] = datetime.now().strftime('%m/%d/%y')
+    
+    # Read and clean the existing CSV data
+    cleaned_rows = []
+    if os.path.exists(file):
+        with open(file, mode='r', newline='') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                # Remove any trailing commas from the row data
+                cleaned_row = {key: value.strip() for key, value in row.items() if key in fieldnames}
+                cleaned_rows.append(cleaned_row)
+    
+    # Append the new meal data to the cleaned rows
+    cleaned_rows.append(meal_data_copy)
+    
+    # Write the cleaned data and the new entry back to the CSV file
+    with open(file, mode='w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(cleaned_rows)
+    
+    messagebox.showinfo("Success", f"{meal_data_copy['Name']} has been added to diet.csv.")
 # Function to search for name in csv/meals.csv
 def search_name(name):
     meals = read_csv('/Users/jerichlee/Documents/aeren/csv/meals.csv')
@@ -31,17 +67,9 @@ def search_name(name):
             return row
     return None
 
-# Function to add meal to csv/meals.csv
 def add_meal(meal_data):
-    write_csv('/Users/jerichlee/Documents/aeren/csv/meals.csv', [meal_data], mode='a')
-
-# Function to append meal to csv/diet.csv with the current date
-def append_to_diet_log(meal_data):
-    # Ensure only relevant fields are included
-    meal_data_copy = {k: meal_data[k] for k in ['Meal', 'Name', 'Food Item', 'Calories', 'Carbs (g)', 'Protein (g)', 'Fat (g)']}
-    meal_data_copy['Date Added'] = datetime.now().strftime('%m/%d/%y')
-    write_csv('/Users/jerichlee/Documents/aeren/csv/diet.csv', [meal_data_copy], mode='a')
-    messagebox.showinfo("Success", f"{meal_data_copy['Name']} has been added to diet.csv.")
+    cleaned_meal_data = {key: value.strip() for key, value in meal_data.items() if value.strip()}
+    write_csv('/Users/jerichlee/Documents/aeren/csv/meals.csv', [cleaned_meal_data], mode='a')
 
 # Function to handle user input
 def handle_input(event=None):
