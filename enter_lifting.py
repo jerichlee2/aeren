@@ -54,6 +54,7 @@ def on_submit():
     lift_type_var.set("")
     active_zone_minutes_var.set("")
     lift_type_entry.focus()
+    root.destroy()
 
 # Create the main window
 root = tk.Tk()

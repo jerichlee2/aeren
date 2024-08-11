@@ -87,7 +87,6 @@ def handle_input(event=None):
         if messagebox.askyesno("Meal not found", f"{name} not found. Do you want to add it to csv/meals.csv?"):
             add_new_meal(name)
 
-# Function to add a new meal to csv/meals.csv
 def add_new_meal(name):
     new_meal_window = tk.Toplevel(root)
     new_meal_window.title("Add New Meal")
@@ -120,7 +119,13 @@ def add_new_meal(name):
     entry_meal.focus_set()  # Set focus to the first entry widget
     
     def save_new_meal(event=None):
+        file = '/Users/jerichlee/Documents/aeren/csv/meals.csv'
         date_added = datetime.now().strftime('%m/%d/%y')
+        
+        # Define the correct fieldnames
+        fieldnames = ['Meal', 'Name', 'Food Item', 'Calories', 'Carbs (g)', 'Protein (g)', 'Fat (g)', 'Date Added']
+        
+        # Ensure that meal_data contains all necessary fields, using an empty string for any missing fields
         meal_data = {
             'Meal': entry_meal.get(),
             'Name': entry_name.get(),
@@ -131,8 +136,30 @@ def add_new_meal(name):
             'Fat (g)': entry_fat.get(),
             'Date Added': date_added
         }
-        add_meal(meal_data)
-        messagebox.showinfo("Success", f"{entry_name.get()} has been added to csv/meals.csv.")
+        
+        # Clean and prepare meal data for saving
+        meal_data_copy = {field: meal_data.get(field, '') for field in fieldnames}
+        
+        # Read and clean the existing CSV data
+        cleaned_rows = []
+        if os.path.exists(file):
+            with open(file, mode='r', newline='') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    # Remove any trailing commas from the row data
+                    cleaned_row = {key: value.strip() for key, value in row.items() if key in fieldnames}
+                    cleaned_rows.append(cleaned_row)
+        
+        # Append the new meal data to the cleaned rows
+        cleaned_rows.append(meal_data_copy)
+        
+        # Write the cleaned data and the new entry back to the CSV file
+        with open(file, mode='w', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(cleaned_rows)
+        
+        messagebox.showinfo("Success", f"{entry_name.get()} has been added to meals.csv.")
         new_meal_window.destroy()
     
     save_button = tk.Button(new_meal_window, text="Save", command=save_new_meal)

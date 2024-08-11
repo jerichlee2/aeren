@@ -19,9 +19,9 @@ def plot_graph(root):
 
     # Set colors for workout types
     color_map = {
-        'Push': 'red',
-        'Pull': 'blue',
-        'Legs': 'green'
+        'push': 'red',
+        'pull': 'blue',
+        'legs': 'green'
     }
 
     # Plotting
