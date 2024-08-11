@@ -1,10 +1,37 @@
 import csv
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
 
+def clean_csv(file_path, expected_columns=5):
+    """Cleans the CSV file by removing trailing commas and ensuring uniform field count."""
+    cleaned_rows = []
+
+    # Read the existing content of the CSV file
+    with open(file_path, mode='r', newline='') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            # Remove any trailing empty fields
+            row = [field for field in row if field.strip()]
+
+            # Ensure each row has the expected number of columns
+            if len(row) < expected_columns:
+                row.extend([''] * (expected_columns - len(row)))
+            elif len(row) > expected_columns:
+                row = row[:expected_columns]
+                
+            cleaned_rows.append(row)
+    
+    # Write the cleaned rows back to the CSV file
+    with open(file_path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(cleaned_rows)
+
 def update_last_entry_in_csv(file_path, comments):
+    # Clean the CSV file first
+    clean_csv(file_path)
+    
     # Get the current time
     current_time = datetime.now().strftime('%I:%M %p')
     
@@ -28,26 +55,8 @@ def update_last_entry_in_csv(file_path, comments):
         return
     
     # Ensure the 'End Time' and 'Comments' columns are correct
-    if len(last_row) < 6:
-        last_row.extend([''] * (6 - len(last_row)))
-    
     last_row[2] = current_time
     last_row[4] = comments
-    
-    # # Calculate the total duration read, rounding to the nearest half hour
-    # try:
-    #     start_time = datetime.strptime(last_row[1], '%I:%M %p')
-    #     end_time = datetime.strptime(last_row[2], '%I:%M %p')
-    #     # Handle PM to AM transition
-    #     if start_time > end_time:
-    #         end_time += timedelta(days=1)
-    #     duration = end_time - start_time
-    #     duration_hours = duration.total_seconds() / 3600
-    #     duration_rounded = round(duration_hours * 2) / 2  # Round to the nearest half hour
-    #     last_row[5] = duration_rounded
-    # except Exception as e:
-    #     messagebox.showerror("Error", f"Error calculating duration: {e}")
-    #     return
     
     # Write the rows back to the CSV file
     with open(file_path, mode='w', newline='') as file:
