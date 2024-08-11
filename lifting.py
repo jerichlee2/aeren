@@ -21,7 +21,8 @@ def plot_graph(root):
     color_map = {
         'push': 'red',
         'pull': 'blue',
-        'legs': 'green'
+        'legs': 'green',
+        'none': 'grey'
     }
 
     # Plotting

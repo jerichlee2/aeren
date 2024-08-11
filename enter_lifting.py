@@ -65,7 +65,7 @@ lift_type_var = tk.StringVar()
 active_zone_minutes_var = tk.StringVar()
 
 # Lift Type Label and Entry
-lift_type_label = tk.Label(root, text="Type of Lift (push, pull, legs):")
+lift_type_label = tk.Label(root, text="Type of Lift:")
 lift_type_label.grid(row=0, column=0, padx=10, pady=5, sticky=tk.W)
 lift_type_entry = tk.Entry(root, textvariable=lift_type_var)
 lift_type_entry.grid(row=0, column=1, padx=10, pady=5)
