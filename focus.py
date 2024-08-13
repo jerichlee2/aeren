@@ -17,21 +17,28 @@ def preprocess_books_data(df, file_path):
         'Date': missing_dates,
         'Start Time': [pd.NaT] * len(missing_dates),
         'End Time': [pd.NaT] * len(missing_dates),
-        'Duration': [0] * len(missing_dates)
+        'Duration': [0] * len(missing_dates)  # This will be calculated later
     })
 
     df = pd.concat([df, missing_data], ignore_index=True)
     df = df.sort_values(by='Date').reset_index(drop=True)
-    df.to_csv(file_path, index=False)
+    
+    # Calculate Duration in a separate DataFrame
+    duration_df = df.copy()
+    duration_df['Duration'] = (pd.to_datetime(duration_df['End Time'], infer_datetime_format=True) -
+                               pd.to_datetime(duration_df['Start Time'], infer_datetime_format=True)).dt.total_seconds() / 3600
 
-    df['Duration'] = (pd.to_datetime(df['End Time'], infer_datetime_format=True) - pd.to_datetime(df['Start Time'], infer_datetime_format=True)).dt.total_seconds() / 3600
-
-    daily_work = df.groupby(df['Date'].dt.date)['Duration'].sum().reset_index()
+    # Prepare data for plotting
+    daily_work = duration_df.groupby(duration_df['Date'].dt.date)['Duration'].sum().reset_index()
     daily_work['Date'] = pd.to_datetime(daily_work['Date'], infer_datetime_format=True)
 
     date_range = pd.date_range(start=daily_work['Date'].min(), end=daily_work['Date'].max())
     daily_work = daily_work.set_index('Date').reindex(date_range, fill_value=0).reset_index()
     daily_work.columns = ['Date', 'Duration']
+
+    # Remove Duration before saving the DataFrame
+    df = df.drop(columns=['Duration'])
+    df.to_csv(file_path, index=False)
 
     return daily_work
 
