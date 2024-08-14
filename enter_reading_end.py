@@ -1,6 +1,6 @@
 import csv
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
 
@@ -34,12 +34,13 @@ def update_last_entry_in_csv(file_path, comments):
     last_row[2] = current_time
     last_row[4] = comments
     
-
-    
-    # Write the rows back to the CSV file
+    # Save the updated rows back to the CSV file
     with open(file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(rows)
+    
+    # Show a message that the entry was successfully updated
+    messagebox.showinfo("Success", "Entry successfully updated.")
 
 def submit_entry(event=None):
     comments = entry_comments.get()
