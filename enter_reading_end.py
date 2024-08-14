@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 def update_last_entry_in_csv(file_path, comments):
-    # Get the current time
+    # Get the current date and time
     current_time = datetime.now().strftime('%I:%M %p')
     
     # Read the existing content of the CSV file
@@ -14,25 +14,27 @@ def update_last_entry_in_csv(file_path, comments):
     if file_exists:
         with open(file_path, mode='r', newline='') as file:
             reader = csv.reader(file)
-            rows = list(reader)
+            for row in reader:
+                # Ensure each row has exactly 6 fields
+                if len(row) < 6:
+                    row.extend([''] * (6 - len(row)))
+                elif len(row) > 6:
+                    row = row[:6]
+                rows.append(row)
     
     # Check if there are any rows to update
     if not rows or len(rows) < 2:
         messagebox.showwarning("Input Error", "No existing entry to update.")
         return
     
-    # Update the last row with the current time and comments
+    # Update the last row with the current date, time, and comments
     last_row = rows[-1]
     if not any(last_row):
         messagebox.showwarning("Input Error", "Last row is empty, cannot update.")
         return
     
-    # Ensure the 'End Time' and 'Comments' columns are correct
-    if len(last_row) < 6:
-        last_row.extend([''] * (6 - len(last_row)))
-    
-    last_row[2] = current_time
-    last_row[4] = comments
+    last_row[2] = current_time  # Assuming the third column is 'End Time'
+    last_row[4] = comments      # Assuming the fifth column is 'Comments'
     
     # Save the updated rows back to the CSV file
     with open(file_path, mode='w', newline='') as file:
@@ -40,7 +42,6 @@ def update_last_entry_in_csv(file_path, comments):
         writer.writerows(rows)
     
     # Show a message that the entry was successfully updated
-    messagebox.showinfo("Success", "Entry successfully updated.")
 
 def submit_entry(event=None):
     comments = entry_comments.get()

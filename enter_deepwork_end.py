@@ -4,35 +4,8 @@ from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
 
-def clean_csv(file_path, expected_columns=5):
-    """Cleans the CSV file by removing trailing commas and ensuring uniform field count."""
-    cleaned_rows = []
-
-    # Read the existing content of the CSV file
-    with open(file_path, mode='r', newline='') as file:
-        reader = csv.reader(file)
-        for row in reader:
-            # Remove any trailing empty fields
-            row = [field for field in row if field.strip()]
-
-            # Ensure each row has the expected number of columns
-            if len(row) < expected_columns:
-                row.extend([''] * (expected_columns - len(row)))
-            elif len(row) > expected_columns:
-                row = row[:expected_columns]
-                
-            cleaned_rows.append(row)
-    
-    # Write the cleaned rows back to the CSV file
-    with open(file_path, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(cleaned_rows)
-
 def update_last_entry_in_csv(file_path, comments):
-    # Clean the CSV file first
-    clean_csv(file_path)
-    
-    # Get the current time
+    # Get the current date and time
     current_time = datetime.now().strftime('%I:%M %p')
     
     # Read the existing content of the CSV file
@@ -41,27 +14,34 @@ def update_last_entry_in_csv(file_path, comments):
     if file_exists:
         with open(file_path, mode='r', newline='') as file:
             reader = csv.reader(file)
-            rows = list(reader)
+            for row in reader:
+                # Ensure each row has exactly 6 fields
+                if len(row) < 6:
+                    row.extend([''] * (6 - len(row)))
+                elif len(row) > 6:
+                    row = row[:6]
+                rows.append(row)
     
     # Check if there are any rows to update
     if not rows or len(rows) < 2:
         messagebox.showwarning("Input Error", "No existing entry to update.")
         return
     
-    # Update the last row with the current time and comments
+    # Update the last row with the current date, time, and comments
     last_row = rows[-1]
     if not any(last_row):
         messagebox.showwarning("Input Error", "Last row is empty, cannot update.")
         return
     
-    # Ensure the 'End Time' and 'Comments' columns are correct
-    last_row[2] = current_time
-    last_row[4] = comments
+    last_row[2] = current_time  # Assuming the third column is 'End Time'
+    last_row[4] = comments      # Assuming the fifth column is 'Comments'
     
-    # Write the rows back to the CSV file
+    # Save the updated rows back to the CSV file
     with open(file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(rows)
+    
+    # Show a message that the entry was successfully updated
 
 def submit_entry(event=None):
     comments = entry_comments.get()
@@ -76,7 +56,7 @@ csv_file_path = '/Users/jerichlee/Documents/aeren/csv/deepwork.csv'  # Update th
 
 # Create the main window
 root = tk.Tk()
-root.title("Enter Deepwork End")
+root.title("Enter Reading End")
 
 # Create and place the widgets
 label_comments = tk.Label(root, text="Comments:")

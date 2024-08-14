@@ -6,7 +6,7 @@ from tkinter import messagebox
 
 def add_entry_to_csv(file_path, goals):
     # Get the current date and time
-    current_date = datetime.now().strftime('%m/%d/%y')
+    current_date = datetime.now().strftime('%Y-%m-%d')
     current_time = datetime.now().strftime('%I:%M %p')
     
     # Read the existing content of the CSV file
