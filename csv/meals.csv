@@ -1,15 +1,15 @@
 Meal,Name,Food Item,Calories,Carbs (g),Protein (g),Fat (g),Date Added
-lunch,pv_summer_lunch_2024,sandwich,560,31,41,31,8/5/24
-dinner,pasta_112g,penne pasta,400,84,14,2,8/5/24
-dinner,ground_beef_85,grass-fed ground beef 85%,960,0,80,70,8/5/24
-breakfast,costco_croissant,croissant from costco,300,31,7,17,8/8/24
-dinner,hotdog,hotdog from dodger stadium,250,20,10,15,8/8/24
-dinner,in_and_out_jerich,in and out double double with fries,1040,93,44,56,8/8/24
-snack,pretzel,pretzel from six flags,389,79,10,5,8/8/24
-snack,dole_whip,dole whip from six flags,90,22,1,0,8/8/24
-dinner,in_and_out_triple_jerich,triple triple with fries,1230,93,59,69,8/8/24
-snack,oatmeal_cookie,oatmeal_cookie,120,18,2,5,8/9/24
-lunch,bcd_jerich,bcd soondooboo seafood + galbi combo + 1 cup rice,1090,67,49,50.5,8/9/24
-dinner,pv_summer_dinner_2024,pasta 112g + 1lb grassfed ground beef,1360,84,94,72,8/9/24
-dinner,three_chicken_thighs,^,585,0,82.7,24,08/10/24
-snack,pizza_crackers,pizza crackers from trader joes,110,16,2,3.5,08/12/24
+lunch,pv_summer_lunch_2024,sandwich,560,31,41,31,2024-08-05
+dinner,pasta_112g,penne pasta,400,84,14,2,2024-08-05
+dinner,ground_beef_85,grass-fed ground beef 85%,960,0,80,70,2024-08-05
+breakfast,costco_croissant,croissant from costco,300,31,7,17,2024-08-08
+dinner,hotdog,hotdog from dodger stadium,250,20,10,15,2024-08-08
+dinner,in_and_out_jerich,in and out double double with fries,1040,93,44,56,2024-08-08
+snack,pretzel,pretzel from six flags,389,79,10,5,2024-08-08
+snack,dole_whip,dole whip from six flags,90,22,1,0,2024-08-08
+dinner,in_and_out_triple_jerich,triple triple with fries,1230,93,59,69,2024-08-08
+snack,oatmeal_cookie,oatmeal_cookie,120,18,2,5,2024-08-09
+lunch,bcd_jerich,bcd soondooboo seafood + galbi combo + 1 cup rice,1090,67,49,50.5,2024-08-09
+dinner,pv_summer_dinner_2024,pasta 112g + 1lb grassfed ground beef,1360,84,94,72,2024-08-09
+dinner,three_chicken_thighs,^,585,0,82.7,24,2024-08-10
+snack,pizza_crackers,pizza crackers from trader joes,110,16,2,3.5,2024-08-12

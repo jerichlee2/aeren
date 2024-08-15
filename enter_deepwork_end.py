@@ -56,7 +56,7 @@ csv_file_path = '/Users/jerichlee/Documents/aeren/csv/deepwork.csv'  # Update th
 
 # Create the main window
 root = tk.Tk()
-root.title("Enter Reading End")
+root.title("Enter Deepwork End")
 
 # Create and place the widgets
 label_comments = tk.Label(root, text="Comments:")

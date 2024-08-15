@@ -48,7 +48,7 @@ csv_file_path = '/Users/jerichlee/Documents/aeren/csv/deepwork.csv'  # Update th
 
 # Create the main window
 root = tk.Tk()
-root.title("Enter Reading Start")
+root.title("Enter Deepwork Start")
 
 # Create and place the widgets
 label_goals = tk.Label(root, text="Goals:")

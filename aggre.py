@@ -10,7 +10,7 @@ class DietApp:
         self.root.title("Aggregator")
 
         # Initialize current date to today
-        self.current_date = pd.to_datetime(datetime.now().strftime('%m/%d/%y'))
+        self.current_date = pd.to_datetime(datetime.now().strftime('%Y-%m-%d'))
 
         # Create a frame for the data display
         self.frame = tk.Frame(root)
@@ -53,13 +53,13 @@ class DietApp:
                 'Weekly Average Time Reading (Hours)',
                 'Weekly Average Deep Work Time (Hours)',
                 'Weekly Average Active Zone Minutes',
-                f"Calories ({self.current_date.strftime('%m/%d/%y')})",
-                f"Carbs (g) ({self.current_date.strftime('%m/%d/%y')})",
-                f"Protein (g) ({self.current_date.strftime('%m/%d/%y')})",
-                f"Fat (g) ({self.current_date.strftime('%m/%d/%y')})",
-                f"Time Reading (Hours) ({self.current_date.strftime('%m/%d/%y')})",
-                f"Deep Work Time (Hours) ({self.current_date.strftime('%m/%d/%y')})",
-                f"Active Zone Minutes ({self.current_date.strftime('%m/%d/%y')})"
+                f"Calories ({self.current_date.strftime('%Y-%m-%d')})",
+                f"Carbs (g) ({self.current_date.strftime('%Y-%m-%d')})",
+                f"Protein (g) ({self.current_date.strftime('%Y-%m-%d')})",
+                f"Fat (g) ({self.current_date.strftime('%Y-%m-%d')})",
+                f"Time Reading (Hours) ({self.current_date.strftime('%Y-%m-%d')})",
+                f"Deep Work Time (Hours) ({self.current_date.strftime('%Y-%m-%d')})",
+                f"Active Zone Minutes ({self.current_date.strftime('%Y-%m-%d')})"
             ],
             'Value': (
                 diet_data['mean_values'] +
@@ -84,7 +84,7 @@ class DietApp:
 
         diet_df = pd.read_csv(diet_file_path)
         diet_df = diet_df[['Calories', 'Carbs (g)', 'Protein (g)', 'Fat (g)', 'Date']]
-        diet_df['Date'] = pd.to_datetime(diet_df['Date'], format='%m/%d/%y')
+        diet_df['Date'] = pd.to_datetime(diet_df['Date'], format='%Y-%m-%d')
 
         last_week = current_date - timedelta(days=6)
         date_range = pd.date_range(last_week, current_date)
@@ -148,7 +148,7 @@ class DietApp:
             return [0.0, 0.0]
 
         deepwork_df = pd.read_csv(deepwork_file_path)
-        deepwork_df['Date'] = pd.to_datetime(deepwork_df['Date'], format='%m/%d/%y')
+        deepwork_df['Date'] = pd.to_datetime(deepwork_df['Date'], format='%Y-%m-%d')
         deepwork_df['Start Time'] = pd.to_datetime(deepwork_df['Start Time'], format='%I:%M %p')
         deepwork_df['End Time'] = pd.to_datetime(deepwork_df['End Time'], format='%I:%M %p')
         deepwork_df['Duration'] = (deepwork_df['End Time'] - deepwork_df['Start Time']).dt.total_seconds() / 3600
@@ -173,7 +173,7 @@ class DietApp:
             return [0.0, 0.0]
 
         lifting_df = pd.read_csv(lifting_file_path)
-        lifting_df['Date'] = pd.to_datetime(lifting_df['Date'], format='%m/%d/%y')
+        lifting_df['Date'] = pd.to_datetime(lifting_df['Date'], format='%Y-%m-%d')
 
         lifting_df['Active Zone Minutes'] = pd.to_numeric(lifting_df['Active Zone Minutes'], errors='coerce')
 
@@ -196,7 +196,7 @@ class DietApp:
         self.process_csv()
 
     def go_forward(self):
-        today_date = pd.to_datetime(datetime.now().strftime('%m/%d/%y'))
+        today_date = pd.to_datetime(datetime.now().strftime('%Y-%m-%d'))
         if self.current_date >= today_date:
             messagebox.showerror("Error", "Cannot go into the future!")
         else:
@@ -205,7 +205,7 @@ class DietApp:
             self.process_csv()
 
     def update_buttons(self):
-        today_date = pd.to_datetime(datetime.now().strftime('%m/%d/%y'))
+        today_date = pd.to_datetime(datetime.now().strftime('%Y-%m-%d'))
         if self.current_date >= today_date:
             self.forward_button.config(state=tk.DISABLED)
         else:

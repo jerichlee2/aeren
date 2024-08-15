@@ -9,7 +9,7 @@ def plot_graph(root):
     df_lifting = pd.read_csv('/Users/jerichlee/Documents/aeren/csv/lifting.csv')
     
     # Convert the 'Date' column to datetime for lifting data
-    df_lifting['Date'] = pd.to_datetime(df_lifting['Date'], format='%m/%d/%y')
+    df_lifting['Date'] = pd.to_datetime(df_lifting['Date'], format='%Y-%m-%d')
 
     # Filter out rows where 'Active Zone Minutes' is missing
     df_lifting = df_lifting.dropna(subset=['Active Zone Minutes'])

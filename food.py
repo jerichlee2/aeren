@@ -14,7 +14,7 @@ def load_and_plot(file_path):
     diet_data['Meal'] = diet_data['Meal'].str.lower()
 
     # Convert the 'Date' column to datetime
-    diet_data['Date'] = pd.to_datetime(diet_data['Date'], format='%m/%d/%y')
+    diet_data['Date'] = pd.to_datetime(diet_data['Date'], format='%Y-%m-%d')
 
     # Calculate daily caloric intake
     daily_calories = diet_data.groupby('Date')['Calories'].sum()
