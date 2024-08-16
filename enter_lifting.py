@@ -8,7 +8,7 @@ csv_file_path = '/Users/jerichlee/Documents/aeren/csv/lifting.csv'
 
 # Function to append data to the next empty row in the CSV file
 def append_to_csv(lift_type, active_zone_minutes):
-    current_date = datetime.now().strftime('%m/%d/%y')
+    current_date = datetime.now().strftime('%Y-%m-%d')
     
     # Read the existing rows
     with open(csv_file_path, mode='r', newline='') as file:

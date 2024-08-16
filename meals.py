@@ -37,7 +37,7 @@ def append_to_diet_log(meal_data):
     
     # Ensure that meal_data contains all necessary fields, using an empty string for any missing fields
     meal_data_copy = {field: meal_data.get(field, '') for field in fieldnames}
-    meal_data_copy['Date'] = datetime.now().strftime('%m/%d/%y')
+    meal_data_copy['Date'] = datetime.now().strftime('%Y-%m-%d')
     
     # Read and clean the existing CSV data
     cleaned_rows = []
