@@ -120,7 +120,7 @@ def add_new_meal(name):
     
     def save_new_meal(event=None):
         file = '/Users/jerichlee/Documents/aeren/csv/meals.csv'
-        date_added = datetime.now().strftime('%m/%d/%y')
+        date_added = datetime.now().strftime('%Y-%m-%d')
         
         # Define the correct fieldnames
         fieldnames = ['Meal', 'Name', 'Food Item', 'Calories', 'Carbs (g)', 'Protein (g)', 'Fat (g)', 'Date Added']
