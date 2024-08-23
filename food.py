@@ -59,7 +59,7 @@ def load_and_plot(file_path):
     axes[2].legend(loc='right', fontsize=4)
     axes[2].tick_params(axis='both', which='major', labelsize=4)
     axes[2].tick_params(axis='x', rotation=0)
-    axes[2].set_xticklabels([date.strftime('%m/%d/%y') for date in meal_contributions.index], fontsize=3)
+    axes[2].set_xticklabels([date.strftime('%Y-%m-%d') for date in meal_contributions.index], fontsize=3)
 
     plt.tight_layout()
 
