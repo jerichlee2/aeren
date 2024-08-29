@@ -17,12 +17,13 @@ class DietApp:
         self.frame = tk.Frame(root)
         self.frame.pack(pady=20, fill=tk.BOTH, expand=True)
 
-        # Create a Treeview widget with four columns (removed 'Score' column)
-        self.tree = ttk.Treeview(self.frame, columns=("Weekly Mean Stat", "Weekly Mean Value", "Today's Value", "Goals"), show='headings')
+        # Create a Treeview widget with four columns
+        self.tree = ttk.Treeview(self.frame, columns=("Weekly Mean Stat", "Weekly Mean Value", "Today's Value", "Goals", "Score"), show='headings')
         self.tree.heading("Weekly Mean Stat", text="Stat")
         self.tree.heading("Weekly Mean Value", text="Weekly Mean Value")
         self.tree.heading("Today's Value", text="Today's Value")
         self.tree.heading("Goals", text="Goals")
+        self.tree.heading("Score", text="Score")
         self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         # Add a vertical scrollbar
@@ -53,14 +54,14 @@ class DietApp:
         diet_data = self.process_diet_csv(self.current_date)
         books_data = self.process_books_csv(self.current_date)
         deepwork_data = self.process_deepwork_csv(self.current_date)
-        lifting_data = self.process_lifting_csv(self.current_date)
+        lifting_data = self.process_lifting_csv(self.current_date)  # Process lifting.csv for Active Zone Minutes
         calm_data = self.process_calm_csv(self.current_date)
         goals_values, ranges = self.process_goals_csv()
-        
-        # Calculate MSE_max using category ranges
         mse_max = self.calculate_constant_mse_max(goals_values, ranges)
 
-        # Update weekly_mean_stats to include "Score ✅"
+        # Calculate scores based on today's values, goals, and MSE_max
+
+        # Create lists for weekly mean and today's data
         weekly_mean_stats = [
             'Cals 🥙',
             'Carbs 🍞',
@@ -69,52 +70,52 @@ class DietApp:
             'Reading 📖',
             'Deepwork 📝',
             'Active 🏋️',
-            'Meditate 🧘'
+            'Meditate 🧘',
+            'Score ✅'
         ]
 
-        # Combine data for weekly means and today's values
         weekly_mean_values = diet_data['mean_values'] + books_data[:1] + deepwork_data[:1] + lifting_data[:1] + calm_data[:1]
         todays_values = diet_data['today_values'] + books_data[1:] + deepwork_data[1:] + lifting_data[1:] + calm_data[1:]
 
-        # Calculate scores based on today's values, goals, and MSE_max
-        score = self.calculate_score(todays_values, goals_values, mse_max)
+        # Calculate MSE_max using category ranges
+        scores = [self.calculate_score(today, goal, mse_max) for today, goal in zip(todays_values, goals_values)]
+        self.append_scores_to_csv(scores)
 
-        # # Include the overall score in the data displayed in the Treeview
-        # overall_score = np.mean(scores)
-        # weekly_mean_values.append('')
-        # todays_values.append('')
-        # goals_values.append('')
+        # Create a list of tuples to pair stats, values, and scores
         data = list(zip(weekly_mean_stats, weekly_mean_values, todays_values, goals_values))
-        data.append(('Score ✅', '', f"{score:.2f}", ''))
 
-        # Display data in the Treeview
         self.display_data(data)
 
         # Append scores to CSV
-        self.append_scores_to_csv(score)
-        print(mse_max)
+        
 
     def process_goals_csv(self):
         goals_file_path = '/Users/jerichlee/Documents/aeren/csv/goals.csv'
-        
         if not os.path.exists(goals_file_path):
             messagebox.showerror("Error", "Goals file not found!")
             return ["N/A"] * 8, {}  # Return default values if file is not found
 
-        # Read the goals.csv file
-        goals_df = pd.read_csv(goals_file_path, header=None)
+        goals_df = pd.read_csv(goals_file_path)
+        goals_df['Date'] = pd.to_datetime(goals_df['Date'], format='%Y-%m-%d')
+        latest_goals = goals_df.sort_values(by='Date', ascending=False).iloc[0]
 
-        # Extract the latest date's goals and range
-        goal_values = goals_df.iloc[1, 1:].astype(float).tolist()
-        
-        # Extract range values, remove quotes and convert to tuples
-        range_strings = goals_df.iloc[2, 1:].tolist()
-        range_values = []
-        for range_str in range_strings:
-            min_val, max_val = map(int, range_str.strip('"()').split(','))
-            range_values.append((min_val, max_val))
+        # Extract goal values in the order corresponding to your stats
+        goals_values = [
+            latest_goals['Calories 🥙'],
+            latest_goals['Carbs 🍞'],
+            latest_goals['Protein 🥩'],
+            latest_goals['Fat 🧈'],
+            latest_goals['Time Reading 📖'],
+            latest_goals['Deepwork Time 📝'],
+            latest_goals['Active Time 🏋️'],
+            latest_goals['Meditation 🧘']
+        ]
 
-        return goal_values, range_values
+        # Extract range values and convert them into tuples
+        range_values = [
+            tuple(map(int, latest_goals['Range'].split(",")[i].strip("()").split())) for i in range(8)
+        ]
+        return goals_values, range_values
 
     def calculate_constant_mse_max(self, goals_values, category_ranges):
         total_mse_max = 0
@@ -123,13 +124,8 @@ class DietApp:
             # Calculate the maximum difference (using range max to goal value)
             max_diff = max(abs(goal_value - min_value), abs(goal_value - max_value))
             
-            # Normalize the difference by the range to avoid division by zero issues
-            if goal_value == 0:
-                normalization_factor = max(abs(min_value), abs(max_value))
-            else:
-                normalization_factor = abs(goal_value)
-            
-            normalized_diff = max_diff / normalization_factor
+            # Normalize the difference by the goal value to get the relative error
+            normalized_diff = max_diff / goal_value if goal_value != 0 else 0
             
             # Square the normalized difference
             squared_diff = normalized_diff ** 2
@@ -139,42 +135,11 @@ class DietApp:
         
         return total_mse_max
 
-    def calculate_score(self, todays_values, goals_values, mse_max):
-        # Ensure mse_max is not zero to avoid division by zero
-        if mse_max == 0:
-            raise ValueError("mse_max must not be zero.")
-
-        # Check that both lists have the same length
-        if len(todays_values) != len(goals_values):
-            raise ValueError("todays_values and goals_values must have the same length.")
-
-        # Introduce a penalty factor for zero todays_values
-        zero_value_penalty = 10  # Adjust this penalty factor based on your requirements
-        mse = 0
-
-        for today_value, goal_value in zip(todays_values, goals_values):
-            # Calculate difference
-            difference = today_value - goal_value
-            
-            # Normalization: if today's value is zero, use the goal value for normalization
-            # to highlight the discrepancy; otherwise, use the goal_value or 1 if goal_value is zero
-            if today_value == 0 and goal_value != 0:
-                normalization_factor = abs(goal_value)
-            elif goal_value == 0:
-                normalization_factor = 1  # avoid division by zero
-            else:
-                normalization_factor = abs(goal_value)
-            
-            # Calculate normalized difference
-            normalized_diff = difference / normalization_factor
-            mse += normalized_diff ** 2
-
-            # Apply penalty for zero todays_values
-            if today_value == 0:
-                mse += zero_value_penalty  # Add penalty to MSE for each zero value
-
-        # Calculate the mean of squared errors
-        mse /= len(todays_values)
+    def calculate_score(self, today_value, goal_value, mse_max):
+        # Calculate the MSE for today's values
+        difference = today_value - goal_value
+        normalized_diff = difference / (goal_value if goal_value != 0 else 1)
+        mse = normalized_diff ** 2
 
         # Calculate the score using MSE and MSE_max
         score = 100 * (1 - (mse / mse_max))
@@ -184,34 +149,17 @@ class DietApp:
         scores_file_path = '/Users/jerichlee/Documents/aeren/csv/scores.csv'
         current_date_str = self.current_date.strftime('%Y-%m-%d')
         
-        # Calculate the overall average score for the day
-        average_score = np.mean(scores)
+        # Create a DataFrame for the scores
+        scores_df = pd.DataFrame({'score': scores, 'date': [current_date_str] * len(scores)})
         
-        # Create a DataFrame for the new score
-        new_scores_df = pd.DataFrame({'score': [average_score], 'date': [current_date_str]})
-        
-        # Check if the scores file exists
+        # Append the DataFrame to the CSV file
         if os.path.exists(scores_file_path):
-            # Read the existing scores
-            existing_scores_df = pd.read_csv(scores_file_path)
-            
-            # Check if the current date is already in the file
-            if current_date_str in existing_scores_df['date'].values:
-                # Replace the row with the same date
-                existing_scores_df.loc[existing_scores_df['date'] == current_date_str, 'score'] = average_score
-            else:
-                # Append the new score
-                existing_scores_df = pd.concat([existing_scores_df, new_scores_df], ignore_index=True)
+            scores_df.to_csv(scores_file_path, mode='a', header=False, index=False)
         else:
-            # If the file doesn't exist, just use the new DataFrame
-            existing_scores_df = new_scores_df
-        
-        # Sort the DataFrame by date in descending order
-        existing_scores_df['date'] = pd.to_datetime(existing_scores_df['date'])
-        sorted_scores_df = existing_scores_df.sort_values(by='date', ascending=True)
-        
-        # Save the sorted DataFrame back to the CSV
-        sorted_scores_df.to_csv(scores_file_path, index=False)
+            scores_df.to_csv(scores_file_path, mode='w', header=True, index=False)
+
+    # Other methods like process_diet_csv, go_back, go_forward, etc...
+
     def display_data(self, data):
         # Clear existing data
         for item in self.tree.get_children():
@@ -221,9 +169,9 @@ class DietApp:
         for mean_stat, mean_value, today_value, goals_values in data:
             self.tree.insert("", tk.END, values=(
                 mean_stat,
-                str(mean_value) if mean_value is not None else '',
-                str(today_value) if today_value is not None else '',
-                str(goals_values) if goals_values is not None else '' 
+                f"{mean_value:.2f}" if mean_value is not None else '',
+                f"{today_value:.2f}" if today_value is not None else '',
+                goals_values
             ))
 
     def process_diet_csv(self, current_date):
@@ -253,16 +201,16 @@ class DietApp:
 
         return {
             'mean_values': [
-                round(mean_values_last_week.get('Calories', 0.0)),
-                               round(mean_values_last_week.get('Carbs (g)', 0.0)),
-                round(mean_values_last_week.get('Protein (g)', 0.0)),
-                round(mean_values_last_week.get('Fat (g)', 0.0))
+                mean_values_last_week.get('Calories', 0.0),
+                mean_values_last_week.get('Carbs (g)', 0.0),
+                mean_values_last_week.get('Protein (g)', 0.0),
+                mean_values_last_week.get('Fat (g)', 0.0)
             ],
             'today_values': [
-                round(today_values.get('Calories', 0.0)),
-                round(today_values.get('Carbs (g)', 0.0)),
-                round(today_values.get('Protein (g)', 0.0)),
-                round(today_values.get('Fat (g)', 0.0))
+                today_values.get('Calories', 0.0),
+                today_values.get('Carbs (g)', 0.0),
+                today_values.get('Protein (g)', 0.0),
+                today_values.get('Fat (g)', 0.0)
             ]
         }
     
@@ -278,7 +226,6 @@ class DietApp:
         books_df['Start Time'] = pd.to_datetime(books_df['Start Time'], format='%I:%M %p', errors='coerce')
         books_df['End Time'] = pd.to_datetime(books_df['End Time'], format='%I:%M %p', errors='coerce')
         books_df['Duration'] = (books_df['End Time'] - books_df['Start Time']).dt.total_seconds() / 3600
-        books_df.loc[books_df['Duration'] < 0, 'Duration'] += 24  # Adjust for overnight time spans
 
         last_week = current_date - timedelta(days=6)
         date_range = pd.date_range(last_week, current_date)
@@ -288,9 +235,9 @@ class DietApp:
         total_reading_time_last_week = daily_reading_time.sum()
         weekly_avg_reading_time = (total_reading_time_last_week / 7).round(3)
 
-        today_reading_time = daily_reading_time.loc[current_date] if current_date in daily_reading_time else 0.0
+        today_reading_time = daily_reading_time.loc[current_date]
 
-        return [weekly_avg_reading_time.round(1), today_reading_time.round(1)]
+        return [weekly_avg_reading_time, today_reading_time]
 
     def process_deepwork_csv(self, current_date):
         deepwork_file_path = '/Users/jerichlee/Documents/aeren/csv/deepwork.csv'
@@ -304,8 +251,6 @@ class DietApp:
         deepwork_df['Start Time'] = pd.to_datetime(deepwork_df['Start Time'], format='%I:%M %p')
         deepwork_df['End Time'] = pd.to_datetime(deepwork_df['End Time'], format='%I:%M %p')
         deepwork_df['Duration'] = (deepwork_df['End Time'] - deepwork_df['Start Time']).dt.total_seconds() / 3600
-        deepwork_df.loc[deepwork_df['Duration'] < 0, 'Duration'] += 24  # Adjust for overnight time spans
-        deepwork_df['Duration'] = np.floor(deepwork_df['Duration'] * 1000) / 1000
 
         last_week = current_date - timedelta(days=6)
         date_range = pd.date_range(last_week, current_date)
@@ -315,9 +260,9 @@ class DietApp:
         total_deepwork_time_last_week = daily_deepwork_time.sum()
         weekly_avg_deepwork_time = (total_deepwork_time_last_week / 7).round(3)
 
-        today_deepwork_time = daily_deepwork_time.loc[current_date] if current_date in daily_deepwork_time else 0.0
+        today_deepwork_time = daily_deepwork_time.loc[current_date]
 
-        return [weekly_avg_deepwork_time.round(1), today_deepwork_time.round(1)]
+        return [weekly_avg_deepwork_time, today_deepwork_time]
 
     def process_lifting_csv(self, current_date):
         lifting_file_path = '/Users/jerichlee/Documents/aeren/csv/lifting.csv'
@@ -338,15 +283,15 @@ class DietApp:
         daily_active_zone_minutes = lifting_df_last_week.groupby('Date')['Active Zone Minutes'].sum().reindex(date_range, fill_value=0)
         weekly_avg_active_zone_minutes = (daily_active_zone_minutes.sum() / 7).round(2)
 
-        today_active_zone_minutes = daily_active_zone_minutes.loc[current_date] if current_date in daily_active_zone_minutes else 0.0
+        today_active_zone_minutes = daily_active_zone_minutes.loc[current_date]
 
-        return [round(weekly_avg_active_zone_minutes), round(today_active_zone_minutes)]
+        return [weekly_avg_active_zone_minutes, today_active_zone_minutes]
     
     def process_calm_csv(self, current_date):
         calm_file_path = '/Users/jerichlee/Documents/aeren/csv/calm.csv'
 
         if not os.path.exists(calm_file_path):
-            messagebox.showerror("Error", "Calm file not found!")
+            messagebox.showerror("Error", "Books file not found!")
             return [0.0, 0.0]
 
         calm_df = pd.read_csv(calm_file_path)
@@ -354,7 +299,6 @@ class DietApp:
         calm_df['Start Time'] = pd.to_datetime(calm_df['Start Time'], format='%I:%M %p', errors='coerce')
         calm_df['End Time'] = pd.to_datetime(calm_df['End Time'], format='%I:%M %p', errors='coerce')
         calm_df['Duration'] = (calm_df['End Time'] - calm_df['Start Time']).dt.total_seconds() / 3600
-        calm_df.loc[calm_df['Duration'] < 0, 'Duration'] += 24  # Adjust for overnight time spans
 
         last_week = current_date - timedelta(days=6)
         date_range = pd.date_range(last_week, current_date)
@@ -364,9 +308,32 @@ class DietApp:
         total_calm_time_last_week = daily_calm_time.sum()
         weekly_avg_calm_time = (total_calm_time_last_week / 7).round(3)
 
-        today_calm_time = daily_calm_time.loc[current_date] if current_date in daily_calm_time else 0.0
+        today_calm_time = daily_calm_time.loc[current_date]
 
-        return [round(weekly_avg_calm_time), round(today_calm_time)]
+        return [weekly_avg_calm_time, today_calm_time]
+    
+    def process_goals_csv(self):
+        goals_file_path = '/Users/jerichlee/Documents/aeren/csv/goals.csv'
+        
+        if not os.path.exists(goals_file_path):
+            messagebox.showerror("Error", "Goals file not found!")
+            return ["N/A"] * 8, {}  # Return default values if file is not found
+
+        # Read the goals.csv file
+        goals_df = pd.read_csv(goals_file_path, header=None)
+
+        # Extract the latest date's goals and range
+        # latest_date = pd.to_datetime(goals_df.iloc[0, 0], format='%m/%d/%y')
+        goal_values = goals_df.iloc[1, 1:].astype(float).tolist()
+        
+        # Extract range values, remove quotes and convert to tuples
+        range_values = []
+        range_strings = goals_df.iloc[2, 1:].tolist()
+        for range_str in range_strings:
+            min_val, max_val = map(int, range_str.strip('"()').split(','))
+            range_values.append((min_val, max_val))
+
+        return goal_values, range_values
 
     def go_back(self):
         self.current_date -= timedelta(days=1)

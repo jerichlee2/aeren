@@ -26,7 +26,7 @@ def load_and_plot(file_path):
     meal_contributions = diet_data.groupby(['Date', 'Meal'])['Calories'].sum().unstack()
 
     # Plotting
-    fig, axes = plt.subplots(3, 1, figsize=(10, 5))
+    fig, axes = plt.subplots(2, 1, figsize=(10, 5))
 
     # Daily Caloric Intake
     axes[0].plot(daily_calories, marker='o', linestyle='-', color='b', markersize=2, linewidth=0.5)
@@ -47,16 +47,16 @@ def load_and_plot(file_path):
     axes[1].set_xticks([])
     # axes[1].grid(True)  # General grid enable
 
-    # Meal Contributions to Daily Caloric Intake
-    meal_contributions.plot(kind='bar', stacked=True, ax=axes[2], colormap='tab20')
-    axes[2].set_title('Meal Contributions to Daily Caloric Intake', fontsize=3)
-    axes[2].set_xlabel('Date', fontsize=3)
-    axes[2].set_ylabel('Calories', fontsize=3)
-    axes[2].legend(loc='best', fontsize=3)
-    axes[2].tick_params(axis='both', which='major', labelsize=4)
-    axes[2].tick_params(axis='x', rotation=90)
-    axes[2].set_xticklabels([date.strftime('%Y-%m-%d') for date in meal_contributions.index], fontsize=3)
-    # axes[2].grid(True)  # General grid enable
+    # # Meal Contributions to Daily Caloric Intake
+    # meal_contributions.plot(kind='bar', stacked=True, ax=axes[2], colormap='tab20')
+    # axes[2].set_title('Meal Contributions to Daily Caloric Intake', fontsize=3)
+    # axes[2].set_xlabel('Date', fontsize=3)
+    # axes[2].set_ylabel('Calories', fontsize=3)
+    # axes[2].legend(loc='best', fontsize=3)
+    # axes[2].tick_params(axis='both', which='major', labelsize=4)
+    # axes[2].tick_params(axis='x', rotation=90)
+    # axes[2].set_xticklabels([date.strftime('%m/%d') for date in meal_contributions.index], fontsize=3)
+    # # axes[2].grid(True)  # General grid enable
 
     plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.2, hspace=0.5)
 

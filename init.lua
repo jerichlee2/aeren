@@ -42,18 +42,21 @@ local function resizeWindows()
     local commonHeight = halfHeight
     local scheduleWidth = eighthWidth * 2
     local aggregatorWidth = eighthWidth * 2
+    local scoresWidth = halfWidth
+    local scoresHeight = quarterHeight
 
     -- Define the target window positions
     local positions = {
         {x = 0, y = 0, w = halfWidth, h = halfHeight},                   -- Top-left corner
-        {x = halfWidth, y = 0, w = halfWidth, h = halfHeight},           -- Top-right corner
+        {x = halfWidth, y = 0, w = halfWidth, h = scoresHeight},           -- Top-right corner
         {x = 0, y = halfHeight, w = halfWidth, h = halfHeight},          -- Bottom-left corner
         {x = screenFrame.w - 4* eighthWidth, y = screenFrame.h - commonHeight, w = scheduleWidth, h = commonHeight}, -- Bottom-right corner (1/8 for "Schedule")
-        {x = screenFrame.w - aggregatorWidth, y = screenFrame.h - commonHeight, w = aggregatorWidth, h = commonHeight} -- Bottom-right corner (1/8 for "Aggregator")
+        {x = screenFrame.w - aggregatorWidth, y = screenFrame.h - commonHeight, w = aggregatorWidth, h = commonHeight}, -- Bottom-right corner (1/8 for "Aggregator")
+        {x = scoresWidth, y = scoresHeight, w = scoresWidth, h = scoresHeight}
     }
 
     -- List of window titles or application names to resize and reposition
-    local windowTitlesOrAppNames = {"Focus", "Food", "Lifting", "Schedule", "Aggregator"}
+    local windowTitlesOrAppNames = {"Focus", "Food", "Lifting", "Schedule", "Aggregator", "Scores"}
 
     -- Resize and reposition each window to its corresponding position
     for i, titleOrAppName in ipairs(windowTitlesOrAppNames) do
@@ -146,7 +149,7 @@ end
 -- Function to close windows by their titles or application names
 local function closeWindows()
     -- List of window titles or application names to close
-    local windowTitlesOrAppNames = {"Focus", "Food", "Lifting", "Schedule", "Aggregator"}
+    local windowTitlesOrAppNames = {"Focus", "Food", "Lifting", "Schedule", "Aggregator", "Scores"}
 
     -- Close each window
     for _, titleOrAppName in ipairs(windowTitlesOrAppNames) do
