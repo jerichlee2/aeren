@@ -60,28 +60,37 @@ def preprocess_deepwork_data(df):
 def plot_data(daily_books, daily_deepwork, root):
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
     
-    ax1.plot(daily_books['Date'], daily_books['Duration'], marker='o', linestyle='-', color='blue')
-    ax1.set_xlabel('Date', fontsize=5)
-    ax1.set_ylabel('Total Duration (hours)', fontsize=5)
-    ax1.set_title('Total Reading Time Per Day', fontsize=5)
-    ax1.grid(True)
+    # Plot for Total Reading Time Per Day
+    ax1.plot(daily_books['Date'], daily_books['Duration'], marker='o', linestyle='-', color='blue', markersize=2, linewidth=0.5)
+    ax1.set_xlabel('Date', fontsize=3)
+    ax1.set_ylabel('Total Duration (hours)', fontsize=3)
+    ax1.set_title('Total Reading Time Per Day', fontsize=3)
+    ax1.grid(True, axis='y')
     ax1.set_ylim(0, 12)
-    ax1.tick_params(axis='x', rotation=90, labelsize=0)
-    ax1.tick_params(axis='y', labelsize=5)
     
-    ax2.plot(daily_deepwork['Date'], daily_deepwork['Duration'], marker='o', linestyle='-', color='green')
-    ax2.set_xlabel('Date', fontsize=5)
-    ax2.set_ylabel('Total Duration (hours)', fontsize=5)
-    ax2.set_title('Total Deep Work Time Per Day', fontsize=5)
-    ax2.grid(True)
+    # Set x-axis ticks to be the dates
+    ax1.set_xticks(daily_books['Date'])
+    ax1.set_xticklabels(daily_books['Date'].dt.strftime('%Y-%m-%d'), rotation=90, fontsize=0)
+    ax1.set_xticks([])
+    ax1.tick_params(axis='y', labelsize=3)
+    
+    # Plot for Total Deep Work Time Per Day
+    ax2.plot(daily_deepwork['Date'], daily_deepwork['Duration'], marker='o', linestyle='-', color='green', markersize=2, linewidth=0.5)
+    ax2.set_xlabel('Date', fontsize=3)
+    ax2.set_ylabel('Total Duration (hours)', fontsize=3)
+    ax2.set_title('Total Deep Work Time Per Day', fontsize=3)
+    ax2.grid(True, axis='y')
     ax2.set_ylim(0, 12)
-    ax2.tick_params(axis='x', rotation=90, labelsize=5)  # Display x-axis dates
-    ax2.tick_params(axis='y', labelsize=5)
+    ax2.set_xticks(daily_deepwork['Date'])
+    ax2.set_xticklabels(daily_deepwork['Date'].dt.strftime('%Y-%m-%d'), rotation=90, fontsize=3)
+    ax2.tick_params(axis='y', labelsize=3)
     
     plt.tight_layout()
     canvas = FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
     canvas.get_tk_widget().pack()
+
+    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.2, hspace=0.5)
 
 file_path_books = '/Users/jerichlee/Documents/aeren/csv/books.csv'
 file_path_deepwork = '/Users/jerichlee/Documents/aeren/csv/deepwork.csv'
