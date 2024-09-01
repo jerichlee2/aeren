@@ -353,8 +353,8 @@ class DietApp:
         calm_df['Date'] = pd.to_datetime(calm_df['Date'], format='%Y-%m-%d')
         calm_df['Start Time'] = pd.to_datetime(calm_df['Start Time'], format='%I:%M %p', errors='coerce')
         calm_df['End Time'] = pd.to_datetime(calm_df['End Time'], format='%I:%M %p', errors='coerce')
-        calm_df['Duration'] = (calm_df['End Time'] - calm_df['Start Time']).dt.total_seconds() / 3600
-        calm_df.loc[calm_df['Duration'] < 0, 'Duration'] += 24  # Adjust for overnight time spans
+        calm_df['Duration'] = (calm_df['End Time'] - calm_df['Start Time']).dt.total_seconds() / 60
+        calm_df.loc[calm_df['Duration'] < 0, 'Duration'] += 24*60  # Adjust for overnight time spans
 
         last_week = current_date - timedelta(days=6)
         date_range = pd.date_range(last_week, current_date)

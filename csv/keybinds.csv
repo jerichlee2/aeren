@@ -6,10 +6,15 @@ terminal,f4
 safari,option+u
 enter_deepwork_start,ctrl+q
 enter_deepwork_start,ctrl+0
-enter_reading_start,ctrl+i
 enter_reading_start,ctrl+w
-enter food,ctrl+o
+enter_reading_end,ctrl+o
+enter food,ctrl+y
 finder,option+0
 enter_lifting,ctrl+9
 vocab,ctrl+8
 quotes,ctrl+7
+enter_calm_start,ctrl+e
+enter_calm_end,ctrl+i
+obsidian_git,ctrl+6
+enter_task,ctrl+r
+clear_task,ctrl+u

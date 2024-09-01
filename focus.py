@@ -46,8 +46,9 @@ def preprocess_calm_data(df):
     df['Start Time'] = pd.to_datetime(df['Start Time'], format='%I:%M %p', errors='coerce')
     df['End Time'] = pd.to_datetime(df['End Time'], format='%I:%M %p', errors='coerce')
     
-    df['Duration'] = (df['End Time'] - df['Start Time']).dt.total_seconds() / 3600
-    df.loc[df['Duration'] < 0, 'Duration'] += 24  # Adjust for overnight time spans
+    # Calculate duration in minutes
+    df['Duration'] = (df['End Time'] - df['Start Time']).dt.total_seconds() / 60
+    df.loc[df['Duration'] < 0, 'Duration'] += 24 * 60  # Adjust for overnight time spans (24 hours converted to minutes)
 
     daily_work = df.groupby(df['Date'].dt.date)['Duration'].sum().reset_index()
     daily_work['Date'] = pd.to_datetime(daily_work['Date'])
