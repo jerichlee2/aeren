@@ -52,12 +52,13 @@ local function resizeWindows()
         {x = 0, y = halfHeight, w = halfWidth, h = halfHeight},          -- Bottom-left corner
         {x = screenFrame.w - 4* eighthWidth, y = screenFrame.h - commonHeight, w = scheduleWidth, h = commonHeight}, -- Bottom-right corner (1/8 for "Schedule")
         {x = screenFrame.w - aggregatorWidth, y = screenFrame.h - commonHeight, w = aggregatorWidth, h = commonHeight}, -- Bottom-right corner (1/8 for "Aggregator")
-        {x = scoresWidth, y = scoresHeight, w = scoresWidth, h = scoresHeight},
-        {x = quarterWidth, y = 0, w = quarterWidth, h = halfHeight}
+        {x = scoresWidth, y = scoresHeight, w = quarterWidth, h = scoresHeight}, -- Scores
+        {x = quarterWidth, y = 0, w = quarterWidth, h = halfHeight},
+        {x = screenFrame.w - quarterWidth, y = scoresHeight, w = quarterWidth, h = quarterHeight}
     }
 
     -- List of window titles or application names to resize and reposition
-    local windowTitlesOrAppNames = {"Focus", "Food", "Lifting", "Schedule", "Aggregator", "Scores", "Tasks"}
+    local windowTitlesOrAppNames = {"Focus", "Food", "Lifting", "Schedule", "Aggregator", "Scores", "Tasks", "Motivational"}
 
     -- Resize and reposition each window to its corresponding position
     for i, titleOrAppName in ipairs(windowTitlesOrAppNames) do
@@ -150,7 +151,7 @@ end
 -- Function to close windows by their titles or application names
 local function closeWindows()
     -- List of window titles or application names to close
-    local windowTitlesOrAppNames = {"Focus", "Food", "Lifting", "Schedule", "Aggregator", "Scores", "Tasks"}
+    local windowTitlesOrAppNames = {"Focus", "Food", "Lifting", "Schedule", "Aggregator", "Scores", "Tasks", "Motivational"}
 
     -- Close each window
     for _, titleOrAppName in ipairs(windowTitlesOrAppNames) do

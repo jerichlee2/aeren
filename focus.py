@@ -87,10 +87,10 @@ def plot_data(daily_books, daily_deepwork, daily_calm, root):
     # Plot for Total Calm Time Per Day
     ax3.plot(daily_calm['Date'], daily_calm['Duration'], marker='o', linestyle='-', color='orange', markersize=2, linewidth=0.5)
     ax3.set_xlabel('Date', fontsize=3)
-    ax3.set_ylabel('Total Duration (hours)', fontsize=3)
+    ax3.set_ylabel('Total Duration (minutes)', fontsize=3)
     ax3.set_title('Total Calm Time Per Day', fontsize=3)
     ax3.grid(True, axis='y')
-    ax3.set_ylim(0, 12)
+    ax3.set_ylim(0, 40)
     ax3.set_xticks(daily_calm['Date'])
     ax3.set_xticklabels(daily_calm['Date'].dt.strftime('%m/%d'), rotation=90, fontsize=3)
     ax3.tick_params(axis='y', labelsize=3)

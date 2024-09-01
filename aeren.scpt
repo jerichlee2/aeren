@@ -5,5 +5,7 @@ do shell script "nohup /usr/local/bin/lifting.command > /dev/null 2>&1 &"
 do shell script "nohup /usr/local/bin/scores.command > /dev/null 2>&1 &"
 do shell script "nohup /usr/local/bin/schedule.command > /dev/null 2>&1 &"
 do shell script "nohup /usr/local/bin/tasks.command > /dev/null 2>&1 &"
+do shell script "nohup /usr/local/bin/motivational.command > /dev/null 2>&1 &"
+
 
 
