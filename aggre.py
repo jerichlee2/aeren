@@ -104,11 +104,25 @@ class DietApp:
         # Read the goals.csv file
         goals_df = pd.read_csv(goals_file_path, header=None)
 
-        # Extract the latest date's goals and range
-        goal_values = goals_df.iloc[1, 1:].astype(float).tolist()
+        # Identify rows with dates and parse them
+        date_rows = pd.to_datetime(goals_df.iloc[:, 0], errors='coerce').dropna().index
         
+        # Find the most recent date that is less than or equal to the current date
+        latest_date_index = None
+        for index in date_rows:
+            date = pd.to_datetime(goals_df.iloc[index, 0])
+            if date <= self.current_date:
+                latest_date_index = index
+
+        if latest_date_index is None:
+            messagebox.showerror("Error", "No valid goals found for the current date!")
+            return ["N/A"] * 8, {}
+
+        # Extract the latest date's goals and range
+        goal_values = goals_df.iloc[latest_date_index + 1, 1:].astype(float).tolist()
+
         # Extract range values, remove quotes and convert to tuples
-        range_strings = goals_df.iloc[2, 1:].tolist()
+        range_strings = goals_df.iloc[latest_date_index + 2, 1:].tolist()
         range_values = []
         for range_str in range_strings:
             min_val, max_val = map(int, range_str.strip('"()').split(','))
