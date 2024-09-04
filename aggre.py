@@ -48,7 +48,6 @@ class DietApp:
 
         # Process the CSV files upon initialization
         self.process_csv()
-
     def process_csv(self):
         diet_data = self.process_diet_csv(self.current_date)
         books_data = self.process_books_csv(self.current_date)
@@ -58,7 +57,7 @@ class DietApp:
         goals_values, ranges = self.process_goals_csv()
         
         # Calculate MSE_max using category ranges
-        mse_max = self.calculate_constant_mse_max(goals_values, ranges)
+        mse_max = self.calculate_constant_mse_max(goals_values)
 
         # Update weekly_mean_stats to include "Score ✅"
         weekly_mean_stats = [
@@ -76,23 +75,147 @@ class DietApp:
         weekly_mean_values = diet_data['mean_values'] + books_data[:1] + deepwork_data[:1] + lifting_data[:1] + calm_data[:1]
         todays_values = diet_data['today_values'] + books_data[1:] + deepwork_data[1:] + lifting_data[1:] + calm_data[1:]
 
-        # Calculate scores based on today's values, goals, and MSE_max
-        score = self.calculate_score(todays_values, goals_values, mse_max)
+        # Round goals_values based on the stat type
+        rounded_goals_values = self.round_goals_values(goals_values)
 
-        # # Include the overall score in the data displayed in the Treeview
-        # overall_score = np.mean(scores)
-        # weekly_mean_values.append('')
-        # todays_values.append('')
-        # goals_values.append('')
-        data = list(zip(weekly_mean_stats, weekly_mean_values, todays_values, goals_values))
-        data.append(('Score ✅', '', f"{score:.2f}", ''))
+# Calculate scores based on today's values, goals, and MSE_max
+        today_score = self.calculate_score(todays_values, goals_values, mse_max, cap_score=True)
+        weekly_mean_score = self.calculate_score(weekly_mean_values, goals_values, mse_max, cap_score=False)
+
+        # Calculate the letter grades for the scores
+        today_letter_grade = self.get_letter_grade(today_score)
+        weekly_mean_letter_grade = self.get_letter_grade(weekly_mean_score)
+
+        # Create the data list
+        data = []
+        for mean_stat, mean_value, today_value, goal_value in zip(weekly_mean_stats, weekly_mean_values, todays_values, rounded_goals_values):
+            data.append((mean_stat, mean_value, today_value, goal_value))
+
+        # Add the overall scores row with letter grades
+        today_score_with_grade = f"{today_score:.2f} ({today_letter_grade})"
+        weekly_mean_score_with_grade = f"{weekly_mean_score:.2f} ({weekly_mean_letter_grade})"
+        data.append(('Score ✅', weekly_mean_score_with_grade, today_score_with_grade, ''))
 
         # Display data in the Treeview
         self.display_data(data)
 
-        # Append scores to CSV
-        self.append_scores_to_csv(score)
+        # Append today's score to CSV without the letter grade
+        self.append_scores_to_csv(today_score)
         print(mse_max)
+
+    def round_goals_values(self, goals_values):
+        # Rounding logic based on the type of stat
+        rounded_values = []
+        for stat, value in zip([
+            'Cals 🥙', 'Carbs 🍞', 'Protein 🥩', 'Fat 🧈',
+            'Reading 📖', 'Deepwork 📝', 'Active 🏋️', 'Meditate 🧘'], goals_values):
+            if stat in ['Cals 🥙', 'Carbs 🍞', 'Protein 🥩', 'Fat 🧈', 'Active 🏋️', 'Meditate 🧘']:
+                rounded_values.append(round(value))  # Round to nearest integer
+            elif stat in ['Reading 📖', 'Deepwork 📝']:
+                rounded_values.append(round(value, 1))  # Round to nearest tenth
+            else:
+                rounded_values.append(value)  # Default case, should not happen
+        return rounded_values
+
+    def get_letter_grade(self, score):
+        if 93 <= score <= 100:
+            return 'A'
+        elif 90 <= score < 93:
+            return 'A-'
+        elif 87 <= score < 90:
+            return 'B+'
+        elif 83 <= score < 87:
+            return 'B'
+        elif 80 <= score < 83:
+            return 'B-'
+        elif 77 <= score < 80:
+            return 'C+'
+        elif 73 <= score < 77:
+            return 'C'
+        elif 70 <= score < 73:
+            return 'C-'
+        elif 67 <= score < 70:
+            return 'D+'
+        elif 63 <= score < 67:
+            return 'D'
+        elif 60 <= score < 63:
+            return 'D-'
+        else:
+            return 'F'
+
+    def display_data(self, data):
+        # Clear existing data
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+
+        # Display the data in the Treeview
+        for mean_stat, mean_value, today_value, goals_values in data:
+            self.tree.insert("", tk.END, values=(
+                mean_stat,
+                str(mean_value) if mean_value is not None else '',
+                str(today_value) if today_value is not None else '',
+                str(goals_values) if goals_values is not None else ''
+            ))
+
+    def append_scores_to_csv(self, score):
+        scores_file_path = '/Users/jerichlee/Documents/aeren/csv/scores.csv'
+        current_date_str = self.current_date.strftime('%Y-%m-%d')
+        
+        # Create a DataFrame for the new score
+        new_scores_df = pd.DataFrame({'score': [score], 'date': [current_date_str]})
+        
+        # Check if the scores file exists
+        if os.path.exists(scores_file_path):
+            # Read the existing scores
+            existing_scores_df = pd.read_csv(scores_file_path)
+            
+            # Check if the current date is already in the file
+            if current_date_str in existing_scores_df['date'].values:
+                # Replace the row with the same date
+                existing_scores_df.loc[existing_scores_df['date'] == current_date_str, 'score'] = score
+            else:
+                # Append the new score
+                existing_scores_df = pd.concat([existing_scores_df, new_scores_df], ignore_index=True)
+        else:
+            # If the file doesn't exist, just use the new DataFrame
+            existing_scores_df = new_scores_df
+        
+        # Sort the DataFrame by date in ascending order
+        existing_scores_df['date'] = pd.to_datetime(existing_scores_df['date'])
+        sorted_scores_df = existing_scores_df.sort_values(by='date', ascending=True)
+        
+        # Save the sorted DataFrame back to the CSV
+        sorted_scores_df.to_csv(scores_file_path, index=False)
+
+    def append_scores_to_csv(self, score):
+        scores_file_path = '/Users/jerichlee/Documents/aeren/csv/scores.csv'
+        current_date_str = self.current_date.strftime('%Y-%m-%d')
+        
+        # Create a DataFrame for the new score
+        new_scores_df = pd.DataFrame({'score': [score], 'date': [current_date_str]})
+        
+        # Check if the scores file exists
+        if os.path.exists(scores_file_path):
+            # Read the existing scores
+            existing_scores_df = pd.read_csv(scores_file_path)
+            
+            # Check if the current date is already in the file
+            if current_date_str in existing_scores_df['date'].values:
+                # Replace the row with the same date
+                existing_scores_df.loc[existing_scores_df['date'] == current_date_str, 'score'] = score
+            else:
+                # Append the new score
+                existing_scores_df = pd.concat([existing_scores_df, new_scores_df], ignore_index=True)
+        else:
+            # If the file doesn't exist, just use the new DataFrame
+            existing_scores_df = new_scores_df
+        
+        # Sort the DataFrame by date in ascending order
+        existing_scores_df['date'] = pd.to_datetime(existing_scores_df['date'])
+        sorted_scores_df = existing_scores_df.sort_values(by='date', ascending=True)
+        
+        # Save the sorted DataFrame back to the CSV
+        sorted_scores_df.to_csv(scores_file_path, index=False)
 
     def process_goals_csv(self):
         goals_file_path = '/Users/jerichlee/Documents/aeren/csv/goals.csv'
@@ -130,69 +253,46 @@ class DietApp:
 
         return goal_values, range_values
 
-    def calculate_constant_mse_max(self, goals_values, category_ranges):
-        total_mse_max = 0
+    def calculate_score(self, values, goals_values, mse_max, cap_score=False):
+        # Adjust values if they exceed goals
+        adjusted_values = [
+            min(value, goal) for value, goal in zip(values, goals_values)
+        ]
 
-        for goal_value, (min_value, max_value) in zip(goals_values, category_ranges):
-            # Calculate the maximum difference (using range max to goal value)
-            max_diff = max(abs(goal_value - min_value), abs(goal_value - max_value))
-            
-            # Normalize the difference by the range to avoid division by zero issues
-            if goal_value == 0:
-                normalization_factor = max(abs(min_value), abs(max_value))
-            else:
-                normalization_factor = abs(goal_value)
-            
-            normalized_diff = max_diff / normalization_factor
-            
-            # Square the normalized difference
-            squared_diff = normalized_diff ** 2
-            
-            # Add to total MSE_max
-            total_mse_max += squared_diff
-        
-        return total_mse_max
-
-    def calculate_score(self, todays_values, goals_values, mse_max):
-        # Ensure mse_max is not zero to avoid division by zero
-        if mse_max == 0:
-            raise ValueError("mse_max must not be zero.")
-
-        # Check that both lists have the same length
-        if len(todays_values) != len(goals_values):
-            raise ValueError("todays_values and goals_values must have the same length.")
-
-        # Introduce a penalty factor for zero todays_values
-        zero_value_penalty = 10  # Adjust this penalty factor based on your requirements
+        # Calculate MSE
         mse = 0
-
-        for today_value, goal_value in zip(todays_values, goals_values):
-            # Calculate difference
-            difference = today_value - goal_value
-            
-            # Normalization: if today's value is zero, use the goal value for normalization
-            # to highlight the discrepancy; otherwise, use the goal_value or 1 if goal_value is zero
-            if today_value == 0 and goal_value != 0:
-                normalization_factor = abs(goal_value)
-            elif goal_value == 0:
-                normalization_factor = 1  # avoid division by zero
-            else:
-                normalization_factor = abs(goal_value)
-            
-            # Calculate normalized difference
-            normalized_diff = difference / normalization_factor
+        for value, goal_value in zip(adjusted_values, goals_values):
+            difference = value - goal_value
+            normalized_diff = difference / (goal_value if goal_value != 0 else 1)
             mse += normalized_diff ** 2
 
-            # Apply penalty for zero todays_values
-            if today_value == 0:
-                mse += zero_value_penalty  # Add penalty to MSE for each zero value
-
-        # Calculate the mean of squared errors
-        mse /= len(todays_values)
+        mse /= len(values)
 
         # Calculate the score using MSE and MSE_max
         score = 100 * (1 - (mse / mse_max))
+
+        # Apply the cap if required
+        if cap_score:
+            if any(value == 0 for value in values):
+                score = min(score, 89)  # Cap score at B+ if there's a zero value
+            elif any(value < 0.9 * goal for value, goal in zip(adjusted_values, goals_values)):
+                score = min(score, 90)  # Cap score at B+ if not within 10% of goal
+
         return max(0, min(100, score))
+
+    def calculate_constant_mse_max(self, goals_values):
+        # Calculate the constant MSE_max using 30% of each goal value
+        total_mse_max = 0
+
+        for goal_value in goals_values:
+            max_range = goal_value * 1.3  # 30% above the goal
+            difference = max_range - goal_value
+            normalized_diff = difference / goal_value
+            squared_diff = normalized_diff ** 2
+            total_mse_max += squared_diff
+
+        return total_mse_max
+
 
     def append_scores_to_csv(self, scores):
         scores_file_path = '/Users/jerichlee/Documents/aeren/csv/scores.csv'
@@ -226,19 +326,6 @@ class DietApp:
         
         # Save the sorted DataFrame back to the CSV
         sorted_scores_df.to_csv(scores_file_path, index=False)
-    def display_data(self, data):
-        # Clear existing data
-        for item in self.tree.get_children():
-            self.tree.delete(item)
-
-        # Display the data in the Treeview
-        for mean_stat, mean_value, today_value, goals_values in data:
-            self.tree.insert("", tk.END, values=(
-                mean_stat,
-                str(mean_value) if mean_value is not None else '',
-                str(today_value) if today_value is not None else '',
-                str(goals_values) if goals_values is not None else '' 
-            ))
 
     def process_diet_csv(self, current_date):
         diet_file_path = '/Users/jerichlee/Documents/aeren/csv/diet.csv'
