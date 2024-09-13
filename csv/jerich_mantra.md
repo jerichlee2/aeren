@@ -1,6 +1,6 @@
 Rules: 
 - Keto
-- Social Media 1x Week
+- Social Media once a day
 
 Gratitude:
 - Family
@@ -9,9 +9,10 @@ Gratitude:
 - Live today as it may be your last
 
 Long-Term Goals:
-- B.S. Engineering Mechanics
+- B.S. Engineering Mechanics & Mathematics
 
 Short-Term Goals:
 - School
-- SEM
-- Friends
+- SEM & Friends
+
+Visualize the Day:

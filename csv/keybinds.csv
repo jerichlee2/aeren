@@ -1,20 +1,23 @@
-﻿Function,Keybind
-obsidian,option+o
-vscode,option+i
-aeren,option+p
-terminal,f4
-safari,option+u
-enter_deepwork_start,ctrl+q
-enter_deepwork_start,ctrl+0
-enter_reading_start,ctrl+w
-enter_reading_end,ctrl+o
-enter food,ctrl+y
-finder,option+0
-enter_lifting,ctrl+9
-vocab,ctrl+8
-quotes,ctrl+7
-enter_calm_start,ctrl+e
-enter_calm_end,ctrl+i
-obsidian_git,ctrl+6
-enter_task,ctrl+r
-clear_task,ctrl+u
+﻿Function,Keybind,text
+obsidian,option+o,
+vscode,option+i,
+aeren,option+p,
+terminal,f4,
+safari,option+u,
+enter_deepwork_start,ctrl+q,
+enter_deepwork_start,ctrl+0,
+enter_reading_start,ctrl+w,
+enter_reading_end,ctrl+o,
+enter food,ctrl+y,
+finder,option+0,
+enter_lifting,ctrl+9,
+vocab,ctrl+8,
+quotes,ctrl+7,
+enter_calm_start,ctrl+e,
+enter_calm_end,ctrl+i,
+obsidian_git,ctrl+6,
+enter_task,ctrl+r,
+clear_task,ctrl+u,
+perplexity_latex,control + 5,condense this and return the copy/paste latex code
+git_commit_w_date,control + 4,git commit -a -m '$(date '+%Y-%m-%d %H:%M:%S')'
+hw_help,control+3,can you help me with this homework assignment? do not give me the answer. do not give me the answer. do not give me the answer.

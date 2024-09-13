@@ -54,7 +54,7 @@ class DietApp:
         deepwork_data = self.process_deepwork_csv(self.current_date)
         lifting_data = self.process_lifting_csv(self.current_date)
         calm_data = self.process_calm_csv(self.current_date)
-        goals_values, ranges = self.process_goals_csv()
+        goals_values = self.process_goals_csv()
         
         # Calculate MSE_max using category ranges
         mse_max = self.calculate_constant_mse_max(goals_values)
@@ -101,7 +101,7 @@ class DietApp:
 
         # Append today's score to CSV without the letter grade
         self.append_scores_to_csv(today_score)
-        print(mse_max)
+        # print(mse_max)
 
     def round_goals_values(self, goals_values):
         # Rounding logic based on the type of stat
@@ -244,14 +244,14 @@ class DietApp:
         # Extract the latest date's goals and range
         goal_values = goals_df.iloc[latest_date_index + 1, 1:].astype(float).tolist()
 
-        # Extract range values, remove quotes and convert to tuples
-        range_strings = goals_df.iloc[latest_date_index + 2, 1:].tolist()
-        range_values = []
-        for range_str in range_strings:
-            min_val, max_val = map(int, range_str.strip('"()').split(','))
-            range_values.append((min_val, max_val))
+        # # Extract range values, remove quotes and convert to tuples
+        # range_strings = goals_df.iloc[latest_date_index + 2, 1:].tolist()
+        # range_values = []
+        # for range_str in range_strings:
+        #     min_val, max_val = map(int, range_str.strip('"()').split(','))
+        #     range_values.append((min_val, max_val))
 
-        return goal_values, range_values
+        return goal_values
 
     def calculate_score(self, values, goals_values, mse_max, cap_score=False):
         # Adjust values if they exceed goals
@@ -273,11 +273,10 @@ class DietApp:
 
         # Apply the cap if required
         if cap_score:
-            if any(value == 0 for value in values):
-                score = min(score, 89)  # Cap score at B+ if there's a zero value
+            if any(value == 0 and goal != 0 for value, goal in zip(values, goals_values)):
+                score = min(score, 89)  # Cap score at B+ if there's a zero value and the goal is not zero
             elif any(value < 0.9 * goal for value, goal in zip(adjusted_values, goals_values)):
-                score = min(score, 90)  # Cap score at B+ if not within 10% of goal
-
+                score = min(score, 90)  # Cap score at A- if not within 10% of goal
         return max(0, min(100, score))
 
     def calculate_constant_mse_max(self, goals_values):
@@ -287,7 +286,7 @@ class DietApp:
         for goal_value in goals_values:
             max_range = goal_value * 1.3  # 30% above the goal
             difference = max_range - goal_value
-            normalized_diff = difference / goal_value
+            normalized_diff = difference / (goal_value if goal_value != 0 else 1)
             squared_diff = normalized_diff ** 2
             total_mse_max += squared_diff
 
